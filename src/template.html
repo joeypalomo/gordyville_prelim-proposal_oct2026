@@ -864,6 +864,44 @@ p + p { margin-top: 0; }
   [data-mname] { font-size: 8pt !important; }
 }
 </style>
+<style id="gv-morph">
+/* Ported from 21st.dev: Morph Button (spinner arc, drawn check, short shake on error) and
+   Loading Button (faces stacked in one grid cell, so the label never shifts the layout).
+   Rebuilt on this page's tokens: square corners, no shadow, nine colors only. */
+[data-gv-morph] { position: relative; display: inline-grid; place-items: center; }
+[data-gv-faces] { display: grid; place-items: center; }
+[data-gv-face] { grid-area: 1 / 1; display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; opacity: 0; transform: translateY(6px); transition: opacity var(--state) cubic-bezier(.22,1,.36,1), transform var(--state) cubic-bezier(.22,1,.36,1); }
+[data-gv-state="idle"] [data-gv-face="idle"], [data-gv-state="saving"] [data-gv-face="saving"], [data-gv-state="signed"] [data-gv-face="signed"], [data-gv-state="failed"] [data-gv-face="failed"] { opacity: 1; transform: none; }
+[data-gv-face] svg { flex: none; overflow: visible; }
+[data-gv-spin] { transform-origin: 50% 50%; animation: gvSpin 800ms linear infinite; }
+[data-gv-draw] { stroke-dasharray: 24; stroke-dashoffset: 0; }
+[data-gv-state="signed"] [data-gv-draw], [data-gv-state="failed"] [data-gv-draw] { animation: gvDraw 260ms cubic-bezier(.22,1,.36,1) 60ms both; }
+[data-gv-state="failed"][data-gv-morph] { animation: gvShake 250ms linear; }
+@keyframes gvSpin { to { transform: rotate(360deg); } }
+@keyframes gvDraw { from { stroke-dashoffset: 24; } to { stroke-dashoffset: 0; } }
+@keyframes gvShake { 0%, 100% { transform: none; } 20% { transform: translateX(-3px); } 40% { transform: translateX(3px); } 60% { transform: translateX(-2px); } 80% { transform: translateX(2px); } }
+
+/* Signed record: the receipt pattern from 21st.dev's Ticket Confirmation Card, with square
+   slots for the perforation (tab and slot, the page's own motif) instead of round cut-outs. */
+[data-gv-receipt] { animation: gvIn 420ms cubic-bezier(.22,1,.36,1) both; }
+[data-gv-seal] svg path { stroke-dasharray: 24; stroke-dashoffset: 0; animation: gvDraw 420ms cubic-bezier(.22,1,.36,1) 260ms both; }
+[data-gv-perf] { position: relative; height: 0; border-top: 1px dashed var(--rule); margin: 0 28px; }
+[data-gv-perf]::before, [data-gv-perf]::after { content: ""; position: absolute; top: -8px; width: 9px; height: 16px; background: var(--canvas); border: 1px solid var(--ink); }
+[data-gv-perf]::before { left: -30px; border-left: 0; }
+[data-gv-perf]::after { right: -30px; border-right: 0; }
+[data-gv-rlist] { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 28px; margin: 0; padding: 22px 28px 24px; }
+[data-gv-rlist] dt { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+[data-gv-rlist] dd { margin: 4px 0 0; font-size: 16px; line-height: 1.45; color: var(--ink); overflow-wrap: anywhere; }
+[data-gv-rwide] { grid-column: 1 / -1; }
+@media (max-width: 560px) {
+  [data-gv-rlist] { grid-template-columns: minmax(0, 1fr); padding: 20px 20px 22px; }
+  [data-gv-perf] { margin: 0 20px; }
+  [data-gv-perf]::before { left: -22px; } [data-gv-perf]::after { right: -22px; }
+  [data-gv-rhead] { padding: 22px 20px 20px !important; }
+  [data-gv-rfoot] { padding: 16px 20px 20px !important; }
+}
+@media print { [data-gv-receipt] { animation: none; break-inside: avoid; } }
+</style>
 <style id="ectx-finish">
 :root { --ectx-font-mono: "DM Sans", sans-serif !important; --font-mono: "DM Sans", sans-serif !important; }
 h1, h2, h3, h4, h5, h6, [style*="Playfair"], [style*="font-display"], [class*="display"], [class*="serif"], [class*="title"] { font-variant-numeric: lining-nums !important; }
@@ -1626,7 +1664,7 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
             <sc-for list="{{ mxCols }}" as="c" hint-placeholder-count="3">
               <span role="cell" style="padding:16px clamp(8px,1.4vw,16px) 18px;background:{{ c.bg }};display:flex;flex-direction:column;gap:10px;min-width:0;">
                 <span style="font-size:clamp(13px,1.5vw,15px);font-weight:500;line-height:1.45;color:var(--ink);text-wrap:pretty;">{{ c.decides }}</span>
-                <span style="font-size:12px;line-height:1.4;color:var(--body);text-wrap:pretty;"><span style="font-size:10.5px;font-weight:600;letter-spacing:0.06em;color:var(--evidence);margin-right:5px;">METHOD</span>{{ c.method }}</span>
+                <span style="font-size:12px;line-height:1.4;color:var(--body);text-wrap:pretty;overflow-wrap:anywhere;hyphens:auto;"><span style="font-size:10.5px;font-weight:600;letter-spacing:0.06em;color:var(--evidence);margin-right:5px;">METHOD</span>{{ c.method }}</span>
               </span>
             </sc-for>
           </div>
@@ -1926,7 +1964,14 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
           <div style="padding:16px 24px 26px;border-top:1px solid var(--rule);margin-top:4px;display:flex;flex-direction:column;gap:16px;">
             <p aria-live="polite" style="max-width:40em;font-size:15px;line-height:1.6;color:var(--muted);text-wrap:pretty;">{{ restatement }}</p>
             <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;">
-              <button type="submit" disabled="{{ submitDisabled }}" style="height:60px;padding:0 32px;min-width:min(100%,320px);background:{{ submitBg }};color:{{ submitFg }};border:1px solid {{ submitBd }};border-radius:0;font-size:17px;font-weight:600;cursor:{{ submitCursor }};transition:background 160ms,color 160ms;">{{ submitLabel }}</button>
+              <button type="submit" data-gv-morph="" data-gv-state="{{ submitState }}" aria-busy="{{ submitBusy }}" aria-label="{{ submitLabel }}" disabled="{{ submitDisabled }}" style="height:60px;padding:0 32px;min-width:min(100%,320px);background:{{ submitBg }};color:{{ submitFg }};border:1px solid {{ submitBd }};border-radius:0;font-size:17px;font-weight:600;cursor:{{ submitCursor }};transition:background var(--state),color var(--state),border-color var(--state);">
+                <span data-gv-faces="" aria-hidden="true">
+                  <span data-gv-face="idle">Sign the NDA and start</span>
+                  <span data-gv-face="saving"><svg aria-hidden="true" width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none"><circle data-gv-spin="" cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" stroke-dasharray="42 57"></circle></svg>Signing</span>
+                  <span data-gv-face="signed"><svg aria-hidden="true" width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"><path data-gv-draw="" d="M5 12.5l4.5 4.5L19 7"></path></svg>Signed</span>
+                  <span data-gv-face="failed"><svg aria-hidden="true" width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="square"><path data-gv-draw="" d="M6 6l12 12M18 6L6 18"></path></svg>Not sent. Try again</span>
+                </span>
+              </button>
               <span aria-live="polite" style="font-size:15px;color:var(--muted);">{{ submitHint }}</span>
             </div>
           </div>
@@ -1934,9 +1979,25 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
       </sc-if>
 
       <sc-if value="{{ received }}" hint-placeholder-val="{{ false }}">
-        <div role="status" style="margin-top:32px;border-top:2px solid var(--ink);padding-top:20px;display:flex;flex-direction:column;gap:8px;">
-          <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">RECEIVED</span>
-          <p style="font-family:'Playfair Display',serif;font-weight:600;font-size:26px;line-height:1.2;color:var(--ink);">{{ receivedLine }}</p>
+        <div role="status" data-gv-receipt="" data-keep="" style="margin-top:32px;max-width:640px;border:1px solid var(--ink);background:var(--canvas);">
+          <div data-gv-rhead="" style="padding:28px 28px 24px;display:flex;gap:18px;align-items:flex-start;">
+            <span data-gv-seal="" aria-hidden="true" style="flex:none;width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--evidence);color:var(--evidence);">
+              <svg width="22" height="22" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 12.5l4.5 4.5L19 7"></path></svg>
+            </span>
+            <div style="display:flex;flex-direction:column;gap:8px;min-width:0;">
+              <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">SIGNED RECORD{{ receiptRefTag }}</span>
+              <p style="font-family:'Playfair Display',serif;font-weight:600;font-size:26px;line-height:1.2;color:var(--ink);text-wrap:balance;">{{ receivedLine }}</p>
+            </div>
+          </div>
+          <div data-gv-perf="" aria-hidden="true"></div>
+          <dl data-gv-rlist="">
+            <div><dt>Signed by</dt><dd>{{ receipt.who }}</dd></div>
+            <div><dt>For</dt><dd>{{ receipt.legal }}</dd></div>
+            <div data-gv-rwide=""><dt>Your choice</dt><dd>{{ receipt.choice }}</dd></div>
+            <div><dt>Interviews</dt><dd>{{ receipt.people }}</dd></div>
+            <div><dt>Signed on</dt><dd>{{ receipt.signedOn }}</dd></div>
+          </dl>
+          <div data-gv-rfoot="" style="padding:16px 28px 22px;border-top:1px solid var(--rule);background:var(--surface);font-size:15px;line-height:1.6;color:var(--body);text-wrap:pretty;">{{ receipt.next }}</div>
         </div>
       </sc-if>
       <sc-if value="{{ failed }}" hint-placeholder-val="{{ false }}">
@@ -2044,7 +2105,14 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
         <p style="font-size:14px;line-height:1.55;color:var(--muted);">It comes to Joey by email with everything you flagged on this page. He answers you by email within one business day.</p>
       </div>
       <div style="padding:16px 24px 24px;border-top:1px solid var(--rule);display:flex;flex-direction:column;gap:12px;">
-        <button type="button" sc-camel-on-click="{{ sendNote }}" disabled="{{ noteDisabled }}" style="height:52px;border:0;border-radius:0;background:{{ noteBtnBg }};color:var(--canvas);font-size:16px;font-weight:600;cursor:pointer;">{{ noteBtnLabel }}</button>
+        <button type="button" data-gv-morph="" data-gv-state="{{ noteState }}" aria-busy="{{ noteBusy }}" aria-label="{{ noteBtnLabel }}" sc-camel-on-click="{{ sendNote }}" disabled="{{ noteDisabled }}" style="height:52px;border:1px solid {{ noteBtnBd }};border-radius:0;background:{{ noteBtnBg }};color:{{ noteBtnFg }};font-size:16px;font-weight:600;cursor:{{ noteCursor }};transition:background var(--state),color var(--state),border-color var(--state);">
+          <span data-gv-faces="" aria-hidden="true">
+            <span data-gv-face="idle">Send to Joey</span>
+            <span data-gv-face="saving"><svg aria-hidden="true" width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none"><circle data-gv-spin="" cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" stroke-dasharray="42 57"></circle></svg>Sending</span>
+            <span data-gv-face="signed"><svg aria-hidden="true" width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"><path data-gv-draw="" d="M5 12.5l4.5 4.5L19 7"></path></svg>Sent to Joey</span>
+            <span data-gv-face="failed"><svg aria-hidden="true" width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="square"><path data-gv-draw="" d="M6 6l12 12M18 6L6 18"></path></svg>Not sent. Try again</span>
+          </span>
+        </button>
         <sc-if value="{{ noteFailed }}" hint-placeholder-val="{{ false }}">
           <p role="alert" style="font-size:14px;line-height:1.55;color:var(--ink);">It did not send from this page. Email <a href="mailto:joey.palomo@ecommercetexas.com">joey.palomo@ecommercetexas.com</a> and we record it by hand.</p>
         </sc-if>
@@ -2079,8 +2147,9 @@ class Component extends DCLogic {
     ndaSignedAt: null,
     formOpen: false, signer: 'Randy Gordey', coordinator: 'Randy Gordey', walk: 'shop', funding: true, consent: false, consent2For: null, notesLog: [], submit: 'idle',
     cardFull: false, followOpen: false, aaronOpen: false, whereOpen: false, overlay: false,
-    picked: [], drafterCost: ''
+    picked: [], drafterCost: '', receipt: null
   };
+  SIGNED_KEY = 'gvc_signed_record_v1';
   CONSENT = 'I sign the mutual NDA for the business named above, and I agree to sign it electronically. I confirm the no-charge interviews, the written plan and the follow-up proposal. Every price for step one is on this page. Any other paid work needs a separate approval.';
   PARTY_ONE = 'Palomo Capital Group LLC, doing business as eCommerce Texas, and David Nagy Enterprises, doing business as eCommerce Canada, together for eCommerce Inc.';
   NDA_PDF = 'GordeyVilleCustoms_Mutual_NDA_eCommerceInc_v1_101726.pdf';
@@ -2144,6 +2213,7 @@ class Component extends DCLogic {
   }
   componentDidMount() {
     document.documentElement.lang = 'en';
+    try { const v = JSON.parse(localStorage.getItem(this.SIGNED_KEY)); if (v && v.at && v.receipt) this.setState({ submit: 'received', ndaSignedAt: v.at, receipt: v.receipt }); } catch (e) {}
     this.onScroll = () => {
       const c = this.coverRef.current;
       const past = c ? c.getBoundingClientRect().bottom < 80 : false;
@@ -2257,7 +2327,7 @@ class Component extends DCLogic {
     window.removeEventListener('keydown', this.onKey);
     window.removeEventListener('resize', this.onResize);
     window.removeEventListener('hashchange', this.onHash);
-    clearTimeout(this.demoT); if (this.demoIO) this.demoIO.disconnect();
+    clearTimeout(this.demoT); clearTimeout(this.signedT); if (this.demoIO) this.demoIO.disconnect();
     document.body.style.overflow = '';
   }
 
@@ -2274,7 +2344,8 @@ class Component extends DCLogic {
     const t = setTimeout(() => ctl && ctl.abort(), 15000);
     return fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctl ? ctl.signal : undefined,
       body: JSON.stringify({ type, page: 'GordeyVilleCustoms_Preliminary_Proposal', sentAt: new Date().toISOString(), data }) })
-      .then(r => r.ok).catch(() => false).finally(() => clearTimeout(t));
+      .then(r => r.ok ? r.json().then(j => ({ ok: true, id: (j && j.id) || '' }), () => ({ ok: true, id: '' })) : { ok: false })
+      .catch(() => ({ ok: false })).finally(() => clearTimeout(t));
   }
   addDays(d, n) { const x = new Date(d); x.setDate(x.getDate() + n); return x; }
   sched(base) {
@@ -2339,7 +2410,7 @@ class Component extends DCLogic {
     const restatement = k
       ? `You are signing the NDA for ${legalName}, confirming ${interviewsWord}, and approving ${setName} at ${fmtC(total)} plus GST.`
       : `You are signing the NDA for ${legalName} and confirming ${interviewsWord}.`;
-    const canSign = ndaValid && s.consent && (k === 0 || consent2) && n > 0 && pdfReady && s.submit !== 'saving' && s.submit !== 'received';
+    const canSign = ndaValid && s.consent && (k === 0 || consent2) && n > 0 && pdfReady && s.submit !== 'saving' && s.submit !== 'signed' && s.submit !== 'received';
     const layerVal = l => ({ ...l, priceText: fmtC(l.price), checked: picked.has(l.id), aria: `Layer ${l.num}, ${l.name}, ${fmtC(l.price)}`,
       toggle: e => { const on = e.target.checked; this.setState(st => ({ consent2For: null, picked: on ? [...st.picked.filter(x => x !== l.id), l.id] : st.picked.filter(x => x !== l.id) })); } });
 
@@ -2495,23 +2566,29 @@ class Component extends DCLogic {
       setShop: () => this.setState({ walk: 'shop' }), setScreen: () => this.setState({ walk: 'screen' }),
       funding: s.funding, toggleFunding: e => this.setState({ funding: e.target.checked }),
       consent: s.consent, toggleConsent: e => this.setState({ consent: e.target.checked }),
-      submitDisabled: !canSign,
-      submitBg: canSign ? 'var(--accent)' : 'var(--canvas)',
-      submitFg: canSign ? 'var(--ink)' : 'var(--muted)',
-      submitBd: canSign ? 'var(--accent)' : 'var(--muted)',
-      submitCursor: canSign ? 'pointer' : 'not-allowed',
-      submitLabel: s.submit === 'saving' ? 'Signing' : 'Sign the NDA and start',
-      submitHint: s.submit === 'saving' || canSign ? '' : 'Fill in the NDA and tick the boxes above to sign.',
-      submitConfirm: e => {
+      ...(() => {
+        const st = s.submit === 'saving' || s.submit === 'signed' || s.submit === 'failed' ? s.submit : 'idle';
+        const look = { saving: ['var(--ink)', 'var(--canvas)', 'var(--ink)'], signed: ['var(--evidence)', 'var(--canvas)', 'var(--evidence)'], failed: ['var(--canvas)', 'var(--ink)', 'var(--ink)'] }[st]
+          || (canSign ? ['var(--accent)', 'var(--ink)', 'var(--accent)'] : ['var(--canvas)', 'var(--muted)', 'var(--muted)']);
+        return { submitState: st, submitBusy: st === 'saving' ? 'true' : 'false', submitBg: look[0], submitFg: look[1], submitBd: look[2],
+          submitDisabled: !canSign, submitCursor: canSign ? 'pointer' : (st === 'idle' ? 'not-allowed' : 'default'),
+          submitLabel: { saving: 'Signing', signed: 'Signed', failed: 'Not sent. Try again' }[st] || 'Sign the NDA and start' };
+      })(),
+      submitHint: s.submit === 'saving' || s.submit === 'signed' || canSign ? '' : 'Fill in the NDA and tick the boxes above to sign.',
+      submitConfirm: async e => {
         e.preventDefault(); if (!canSign) return;
+        this.setState({ submit: 'saving' });
+        // Fingerprint the NDA PDF this page shows, so the server can confirm it is the file it attaches.
+        let pdfSha256 = null;
+        try { const b = atob(String(window.GVC_NDA_PDF || '').split(',')[1] || ''); if (b && window.crypto && crypto.subtle) { const u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); pdfSha256 = [...new Uint8Array(await crypto.subtle.digest('SHA-256', u))].map(x => x.toString(16).padStart(2, '0')).join(''); } } catch (err) {}
         const at = this.today(), d = this.sched(at);
         const log = [...this.state.notesLog];
         const draft = s.notesText.trim();
         if (draft && s.noteStatus !== 'received' && !log.some(x => x.text === draft)) log.push({ about: s.notesContext, text: draft, at: new Date().toISOString(), sent: false, draft: true });
         const data = {
-          version: 'gv-v5.7',
+          version: 'gv-v5.8',
           nda: { legal: nda.legal.trim(), address: nda.address.trim(), name: nda.name.trim(), title: nda.title.trim(), email: nda.email.trim(), signature: nda.signature.trim(),
-            authorized: true, agreedToElectronicSignature: true, pdf: this.NDA_PDF, partyOne: this.PARTY_ONE },
+            authorized: true, agreedToElectronicSignature: true, pdf: this.NDA_PDF, pdfSha256, partyOne: this.PARTY_ONE },
           consent: { ndaAndStepOne: this.CONSENT, layers: k ? consent2Text : null },
           restatement,
           choice: { preset: match && k ? match.name : null, layerIds: pickedLayers.map(l => l.id),
@@ -2525,14 +2602,29 @@ class Component extends DCLogic {
           client: { userAgent: navigator.userAgent, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone }
         };
         window.__gvLastAccept = data;
-        this.setState({ submit: 'saving', notesLog: log });
-        this.post('accept', data).then(ok => this.setState(ok ? { submit: 'received', record: data, ndaSignedAt: at.getTime() } : { submit: 'failed' }));
+        this.setState({ notesLog: log });
+        const res = await this.post('accept', data);
+        if (!res.ok) { this.setState({ submit: 'failed' }); return; }
+        const receipt = {
+          who: data.nda.name + (data.nda.title ? ', ' + data.nda.title : ''), legal: data.nda.legal,
+          choice: k ? `${setName}, ${totalPlus}` : 'Bottleneck diagnosis. The interviews, the written plan and the follow-up proposal, no charge.',
+          people: `${interviewsWord}. Links open ${this.fmt(d.open)}.`, signedOn: data.dates.signedOn,
+          ref: res.id ? 'GV-' + String(res.id).replace(/[^a-z0-9]/gi, '').slice(0, 8).toUpperCase() : '',
+          next: `Joey and David countersign within one business day and email it to ${data.nda.email}${k ? ', with the first invoice' : ''}.`
+        };
+        try { localStorage.setItem(this.SIGNED_KEY, JSON.stringify({ at: at.getTime(), receipt })); } catch (err) {}
+        // Hold the drawn check on the button for a beat, then hand over to the signed record.
+        this.setState({ submit: 'signed', record: data, ndaSignedAt: at.getTime(), receipt });
+        const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        this.signedT = setTimeout(() => this.setState({ submit: 'received' }), reduce ? 0 : 900);
       },
       received: s.submit === 'received', failed: s.submit === 'failed',
+      receipt: s.receipt || { who: '', legal: '', choice: '', people: '', signedOn: '', next: '' },
+      receiptRefTag: s.receipt && s.receipt.ref ? ' · ' + s.receipt.ref : '',
       receivedLine: 'Signed and sent. Joey has your NDA, your choices and your notes.',
       nextSteps: [
-        { num: '01', when: 'Today.', text: 'eCommerce Inc. gets your signed NDA, your choices and your notes. A copy of what you signed lands in your inbox.' },
-        { num: '02', when: 'Within one business day.', text: 'Joey and David countersign the NDA and email it back to you' + (k ? ', with the first invoice if you picked layers.' : '.') },
+        { num: '01', when: 'Today.', text: 'eCommerce Inc. gets your signed NDA, your choices and your notes.' },
+        { num: '02', when: 'Within one business day.', text: 'Joey and David countersign the NDA and email it back to you with a copy of what you signed' + (k ? ', and the first invoice if you picked layers.' : '.') },
         { num: '03', when: this.fmt(open) + '.', text: 'Each person on your list gets their own link by email.' },
         { num: '04', when: this.fmt(close) + '.', text: 'The interviews close.' },
         { num: '05', when: this.fmt(review) + ', proposed.', text: 'We walk you through the plan, at your shop or on a screen.' }
@@ -2540,15 +2632,21 @@ class Component extends DCLogic {
       notesOpen: s.notesOpen, notesContext: s.notesContext, notesText: s.notesText,
       setNotesText: e => this.setState({ notesText: e.target.value, noteStatus: s.noteStatus === 'received' ? 'idle' : s.noteStatus }),
       closeNotes: () => this.setState({ notesOpen: false }),
-      noteDisabled: !s.notesText.trim() || s.noteStatus === 'saving',
-      noteBtnBg: !s.notesText.trim() || s.noteStatus === 'saving' ? '#C8C8C8' : '#040406',
-      noteBtnLabel: s.noteStatus === 'saving' ? 'Saving' : (s.noteStatus === 'received' ? 'Received' : 'Send to Joey'),
+      ...(() => {
+        const st = { saving: 'saving', received: 'signed', failed: 'failed' }[s.noteStatus] || 'idle';
+        const off = st === 'idle' && !s.notesText.trim();
+        const look = { saving: ['var(--ink)', 'var(--canvas)', 'var(--ink)'], signed: ['var(--evidence)', 'var(--canvas)', 'var(--evidence)'], failed: ['var(--canvas)', 'var(--ink)', 'var(--ink)'] }[st]
+          || (off ? ['var(--rule)', 'var(--canvas)', 'var(--rule)'] : ['var(--ink)', 'var(--canvas)', 'var(--ink)']);
+        return { noteState: st, noteBusy: st === 'saving' ? 'true' : 'false', noteBtnBg: look[0], noteBtnFg: look[1], noteBtnBd: look[2],
+          noteDisabled: off || st === 'saving' || st === 'signed', noteCursor: off || st !== 'idle' && st !== 'failed' ? 'default' : 'pointer',
+          noteBtnLabel: { saving: 'Sending', signed: 'Sent to Joey', failed: 'Not sent. Try again' }[st] || 'Send to Joey' };
+      })(),
       noteFailed: s.noteStatus === 'failed',
       sendNote: () => {
         const text = s.notesText.trim(); if (!text) return;
         const entry = { about: s.notesContext, text, at: new Date().toISOString() };
         this.setState({ noteStatus: 'saving' });
-        this.post('note', { about: s.notesContext, text }).then(ok => this.setState(st => ({ noteStatus: ok ? 'received' : 'failed', notesLog: [...st.notesLog, { ...entry, sent: ok }] })));
+        this.post('note', { about: s.notesContext, text }).then(r => this.setState(st => ({ noteStatus: r.ok ? 'received' : 'failed', notesLog: [...st.notesLog, { ...entry, sent: r.ok }] })));
       },
       shipLong: ship.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
       submitEndpoint: this.props.submitEndpoint ?? '/api/submit',

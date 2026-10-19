@@ -1,0 +1,5 @@
+{
+  "functions": {
+    "api/submit.js": { "includeFiles": "assets/**", "maxDuration": 15 }
+  }
+}
