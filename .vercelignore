@@ -1,5 +1,8 @@
 src/
 tools/
 build/
-README.md
+*.md
+*.docx
+*.txt
 .gitignore
+.vercelignore

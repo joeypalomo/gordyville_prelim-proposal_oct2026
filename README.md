@@ -42,6 +42,13 @@ Retries never double-send: the Resend idempotency key is a hash of the submissio
   delivers only to the Resend account owner. To send from `ecommercetexas.com` or to anyone else,
   verify the domain in Resend first, then set this.
 
+## The price lives in two places
+
+Step one is one price (gv-v7.0): C$18,500 plus GST. It is `BASE.price` in `src/template.html` and
+`STEP_ONE_PRICE` in `api/submit.js`; the funding application alone is `FUNDING_ALONE` and
+`FUNDING_ALONE_PRICE` (C$5,250). The handler refuses any signature whose price differs (400, plus
+an alert email to Joey). Change both files together, and every literal `C$18,500` in the copy.
+
 ## Test locally
 
 The skill's harness runs the real function with Resend mocked:

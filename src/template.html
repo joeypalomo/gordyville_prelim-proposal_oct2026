@@ -28,7 +28,7 @@ html[data-gvcpl="full"] #gvcpl-host,html[data-gvcpl="short"] #gvcpl-host,html[da
 <helmet>
 <title>3 months of work booked. Step one finds where it waits.</title>
 <meta name="robots" content="noindex, nofollow">
-<meta name="gv-build" content="gv-v6.0">
+<meta name="gv-build" content="gv-v7.0">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta property="og:title" content="3 months of work booked. Step one finds where it waits.">
 <meta name="description" content="We start with short online interviews and ten of your own job dates. From those, we learn how work moves through your shop and what to fix first.">
@@ -841,11 +841,8 @@ p + p { margin-top: 0; }
   [data-hero] { min-height: 640px !important; }
   [data-logogrid] { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
   [data-team6] { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
-  [data-layerhead] { grid-template-columns: 22px minmax(0,1fr) !important; }
-  [data-layerprice] { grid-column: 2; text-align: left !important; }
   [data-layerlines] > div { grid-template-columns: minmax(0,1fr) !important; gap: 2px !important; }
   [data-terms] > div { grid-template-columns: minmax(0,1fr) !important; gap: 4px !important; }
-  [data-lmethod] { grid-column: 1 / -1 !important; }
   [data-rptrow] { grid-template-columns: 32px minmax(0,1fr) !important; }
   [data-rptrow] > dd { grid-column: 2; }
 }
@@ -859,8 +856,6 @@ p + p { margin-top: 0; }
   section { break-inside: auto; }
   h1, h2, h3 { break-after: avoid; }
   html { scroll-behavior: auto; }
-  [data-mlabel] { font-size: 7.5pt !important; }
-  [data-mname] { font-size: 8pt !important; }
 }
 </style>
 <style id="gv-morph">
@@ -900,11 +895,9 @@ p + p { margin-top: 0; }
   [data-gv-rfoot] { padding: 16px 20px 20px !important; }
 }
 @media print { [data-gv-receipt] { animation: none; break-inside: avoid; } }
-/* v6.0 Section 07: a checked add-on reads as selected, using the page's surface tint, bled
-   16px past the text edge so nothing shifts. */
-[data-gv-addon] { transition: background-color var(--state), box-shadow var(--state); }
-[data-gv-addon][data-on="true"] { background: var(--surface); box-shadow: -16px 0 0 var(--surface), 16px 0 0 var(--surface); }
-@media print { [data-gv-addon][data-on="true"] { box-shadow: none; } }
+/* v7.0 price box: on phones the figure and the credit band share one left edge. */
+@media (max-width: 560px) { [data-gv-pricefig] { margin-left: 0 !important; align-items: flex-start !important; text-align: left !important; } }
+@media print { [data-gv-pricebox] { break-inside: avoid; } }
 </style>
 <style id="ectx-finish">
 :root { --ectx-font-mono: "DM Sans", sans-serif !important; --font-mono: "DM Sans", sans-serif !important; }
@@ -989,7 +982,7 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
   <div style="max-width:1200px;margin:0 auto;padding:clamp(36px,5vw,56px) clamp(20px,4vw,48px) 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:32px clamp(32px,6vw,88px);align-items:start;">
     <ul style="list-style:none;margin:0;padding:0;border-top:1px solid var(--ink);">
       <li style="padding:14px 0;border-bottom:1px solid var(--rule);font-size:17px;font-weight:500;color:var(--ink);">About 15 minutes per person</li>
-      <li style="padding:14px 0;border-bottom:1px solid var(--rule);font-size:17px;font-weight:500;color:var(--ink);">Step one: C$3,000, credited in full to work you hire us for within 90 days of the review meeting</li>
+      <li style="padding:14px 0;border-bottom:1px solid var(--rule);font-size:17px;font-weight:500;color:var(--ink);">Step one: C$18,500, credited in full to anything we build for you within 90 days of the review meeting</li>
       <li style="padding:14px 0;border-bottom:1px solid var(--rule);font-size:17px;font-weight:500;color:var(--ink);">Every price for step one is on this page.</li>
     </ul>
     <dl style="margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 28px;padding-top:15px;border-top:1px solid var(--ink);">
@@ -1008,7 +1001,7 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
 
 <section id="what-we-heard" data-screen-label="01 What we heard" style="padding-top:clamp(80px,10vw,136px);">
   <div data-secgrid="" style="display:grid;grid-template-columns:180px minmax(0,1fr);gap:56px;">
-    <div><div data-rail="" style="position:sticky;top:104px;display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--ink);padding-top:14px;"><span style="font-size:13px;font-weight:700;letter-spacing:0.08em;color:var(--ink);">01</span><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);">Why this</span></div></div>
+    <div><div data-rail="" style="position:sticky;top:104px;display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--ink);padding-top:14px;"><span style="font-size:13px;font-weight:700;letter-spacing:0.08em;color:var(--ink);">01</span><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);">Your shop</span></div></div>
     <div style="min-width:0;">
       <h2 style="margin:0;font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(32px,4.2vw,48px);line-height:1.1;letter-spacing:-0.015em;color:var(--ink);text-wrap:balance;">What we heard.</h2>
       <div data-stack="" style="margin-top:40px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;">
@@ -1043,11 +1036,11 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
   </div>
 </section>
 
-<section id="the-size" data-screen-label="02 The size of it" style="padding-top:clamp(80px,10vw,136px);">
+<section id="the-size" data-screen-label="02 Your shop today" style="padding-top:clamp(80px,10vw,136px);">
   <div data-secgrid="" style="display:grid;grid-template-columns:180px minmax(0,1fr);gap:56px;">
-    <div><div data-rail="" style="position:sticky;top:104px;display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--ink);padding-top:14px;"><span style="font-size:13px;font-weight:700;letter-spacing:0.08em;color:var(--ink);">02</span><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);">Why this</span></div></div>
+    <div><div data-rail="" style="position:sticky;top:104px;display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--ink);padding-top:14px;"><span style="font-size:13px;font-weight:700;letter-spacing:0.08em;color:var(--ink);">02</span><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);">Your shop</span></div></div>
     <div style="min-width:0;">
-      <h2 style="margin:0;font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(32px,4.2vw,48px);line-height:1.1;letter-spacing:-0.015em;color:var(--ink);text-wrap:balance;">The size of it, in your units.</h2>
+      <h2 style="margin:0;font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(32px,4.2vw,48px);line-height:1.1;letter-spacing:-0.015em;color:var(--ink);text-wrap:balance;">You have more work than your welders can start.</h2>
       <div data-keep="" style="margin-top:40px;border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);padding:clamp(28px,4vw,44px) 0 24px;">
         <p style="font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(34px,5vw,62px);line-height:1.08;letter-spacing:-0.02em;color:var(--ink);font-variant-numeric:lining-nums;text-wrap:balance;">About 3 months booked.<br>4 or 5 jobs at once, <span style="white-space:nowrap;"><svg aria-hidden="true" sc-camel-view-box="0 0 24 24" style="width:0.62em;height:0.62em;margin:0 0.08em 0 0.02em;vertical-align:-0.02em;overflow:visible;" fill="none" stroke="var(--evidence)" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 20 L10 12 L14 15.5 L21 6"></path><path d="M14.5 5.5 H21.5 V12.5"></path></svg>up from 2.</span></p>
         <p style="margin-top:22px;font-size:14px;color:var(--muted);">Your numbers, from our two calls on October 9.</p>
@@ -1067,7 +1060,7 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
       <figure data-keep="" style="margin:48px 0 0;border:1px solid var(--ink);">
         <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;padding:14px 20px;border-bottom:1px solid var(--rule);">
           <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--muted);">FIG. 1</span>
-          <span style="font-family:'Playfair Display',serif;font-weight:600;font-size:20px;color:var(--ink);">Three tabs, one seam.</span>
+          <span style="font-family:'Playfair Display',serif;font-weight:600;font-size:20px;color:var(--ink);">The welder starts when all three are ready.</span>
         </div>
         <div style="position:relative;width:100%;aspect-ratio:2.2/1;min-height:220px;background:var(--canvas);">
           <x-import component-from-global-scope="gvc-steel-plate" from="fa9e14ff-bdeb-485f-8e35-db6064341740#/gvc-steel-plate.js" missing="{{ plateMissing }}" style="position:absolute;inset:0;" hint-size="100%,100%"></x-import>
@@ -1087,13 +1080,7 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
         </figcaption>
       </figure>
       <div data-keep="" style="margin-top:36px;">
-        <p style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">HOW TO READ IT</p>
-        <ol style="list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));border-top:1px solid var(--ink);">
-          <li style="padding:18px 24px 20px 0;display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--rule);"><span style="font-size:13px;font-weight:700;letter-spacing:0.08em;color:var(--ink);">01 · THE TAB</span><span style="font-size:16px;line-height:1.55;color:var(--body);text-wrap:pretty;">One thing a job needs before welding: the drawing, the cut steel, the material.</span></li>
-          <li style="padding:18px 24px 20px 0;display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--rule);"><span style="font-size:13px;font-weight:700;letter-spacing:0.08em;color:var(--ink);">02 · THE SLOT</span><span style="font-size:16px;line-height:1.55;color:var(--body);text-wrap:pretty;">The bay. Each piece drops in when its part is ready. The seam only welds when all three are in.</span></li>
-          <li style="padding:18px 0 20px;display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--rule);"><span style="font-size:13px;font-weight:700;letter-spacing:0.08em;color:var(--ink);">03 · THE SEAM</span><span style="font-size:16px;line-height:1.55;color:var(--body);text-wrap:pretty;">The welder can’t start until all three are ready. The job waits on the last one to show up, however early the other two came.</span></li>
-        </ol>
-        <p style="margin-top:22px;max-width:36em;font-family:'Playfair Display',serif;font-size:clamp(20px,2.2vw,24px);line-height:1.4;color:var(--ink);text-wrap:pretty;">So speeding up a tab only helps if <i>it’s</i> the late one. The interviews and your job dates find which tab is late most often.</p>
+        <p style="max-width:36em;font-family:'Playfair Display',serif;font-size:clamp(20px,2.2vw,24px);line-height:1.4;color:var(--ink);text-wrap:pretty;">So speeding up a tab only helps if <i>it’s</i> the late one. The interviews and your job dates find which tab is late most often.</p>
       </div>
     </div>
   </div>
@@ -1107,7 +1094,7 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
   <div data-secgrid="" style="display:grid;grid-template-columns:180px minmax(0,1fr);gap:56px;">
     <div><div data-rail="" style="position:sticky;top:104px;display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--ink);padding-top:14px;"><span style="font-size:13px;font-weight:700;letter-spacing:0.08em;color:var(--ink);">03</span><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);">The interviews</span></div></div>
     <div style="min-width:0;">
-      <h2 style="margin:0;font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(32px,4.2vw,48px);line-height:1.1;letter-spacing:-0.015em;color:var(--ink);text-wrap:balance;max-width:18ch;">Step one is about 15 minutes on a screen.</h2>
+      <h2 style="margin:0;font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(32px,4.2vw,48px);line-height:1.1;letter-spacing:-0.015em;color:var(--ink);text-wrap:balance;max-width:18ch;">It starts with a 15-minute online interview for each person.</h2>
       <p style="margin-top:28px;max-width:40em;font-size:17px;line-height:1.65;text-wrap:pretty;">Each person gets their own link, built for their job. It asks about <i>their</i> week: what they do, what they wait on, and what they wish someone else handled. It takes about 15 minutes, on a phone or a computer.</p>
       <div style="margin-top:40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:20px;">
         <div data-keep="" style="border-top:2px solid var(--ink);padding-top:20px;display:flex;flex-direction:column;gap:12px;">
@@ -1199,7 +1186,7 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
         </figure>
         <div style="display:flex;flex-direction:column;gap:24px;min-width:0;">
           <p style="display:flex;align-items:center;gap:12px;font-size:15px;font-weight:600;color:var(--ink);"><span aria-hidden="true" style="width: 7px; height: 7px; background: var(--evidence); flex: 0 0 auto;"></span>Example. The answers are made up.</p>
-          <p style="font-family:'Playfair Display',serif;font-size:clamp(22px,2.2vw,28px);line-height:1.3;color:var(--ink);text-wrap:pretty;">Your people see a screen like this one. The questions change by job, and these answers are made up.</p>
+          <p style="font-family:'Playfair Display',serif;font-size:clamp(22px,2.2vw,28px);line-height:1.3;color:var(--ink);text-wrap:pretty;">Each person sees a screen like this, with questions about their own job. These answers are made up.</p>
           <div style="display:flex;flex-direction:column;border-top:1px solid var(--ink);">
             <div style="padding:16px 0 18px;border-bottom:1px solid var(--rule);display:flex;flex-direction:column;gap:8px;">
               <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">IT ASKS</span>
@@ -1215,11 +1202,11 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
       </div>
 </section>
 
-<section id="who-takes-it" data-screen-label="04 Who takes it" style="padding-top:clamp(80px,10vw,136px);">
+<section id="who-takes-it" data-screen-label="04 Who takes the interviews" style="padding-top:clamp(80px,10vw,136px);">
   <div data-secgrid="" style="display:grid;grid-template-columns:180px minmax(0,1fr);gap:56px;">
     <div><div data-rail="" style="position:sticky;top:104px;display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--ink);padding-top:14px;"><span style="font-size:13px;font-weight:700;letter-spacing:0.08em;color:var(--ink);">04</span><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);">The interviews</span></div></div>
     <div style="min-width:0;">
-      <h2 style="margin:0;font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(32px,4.2vw,48px);line-height:1.1;letter-spacing:-0.015em;color:var(--ink);text-wrap:balance;">Who takes it. You decide here.</h2>
+      <h2 style="margin:0;font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(32px,4.2vw,48px);line-height:1.1;letter-spacing:-0.015em;color:var(--ink);text-wrap:balance;">Choose who takes the interviews.</h2>
       <div data-stack="" style="margin-top:40px;display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:40px;align-items:start;">
         <div data-keep="" style="border-top:1px solid var(--ink);">
           <sc-for list="{{ roster }}" as="p" hint-placeholder-count="6">
@@ -1401,7 +1388,7 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
       <p style="margin-top:20px;font-size:17px;line-height:1.65;color:var(--ink);font-weight:500;">Both are yours whether or not you hire us for anything after.</p>
 
       <div data-keep="" style="margin-top:48px;background:var(--surface);padding:clamp(28px,4vw,44px);">
-        <p style="font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.15;color:var(--ink);text-wrap:balance;">Step one is C$3,000, and every dollar comes off anything you hire us to build within 90 days of the review meeting. Every price for step one is on this page.</p>
+        <p style="font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);line-height:1.15;color:var(--ink);text-wrap:balance;">Step one is C$18,500, and every dollar comes off anything we build for you within 90 days of the review meeting. Every price for step one is on this page.</p>
       </div>
 
       <div style="margin-top:56px;">
@@ -1632,13 +1619,13 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
   </div>
 </section>
 
-<section id="go-deeper" data-screen-label="07 Go deeper" style="padding-top:clamp(80px,10vw,136px);">
+<section id="go-deeper" data-screen-label="07 The price" style="padding-top:clamp(80px,10vw,136px);">
   <div data-secgrid="" style="display:grid;grid-template-columns:180px minmax(0,1fr);gap:56px;">
-    <div><div data-rail="" style="position:sticky;top:104px;display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--ink);padding-top:14px;"><span style="font-size:13px;font-weight:700;letter-spacing:0.08em;color:var(--ink);">07</span><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);">Go deeper</span></div></div>
+    <div><div data-rail="" style="position:sticky;top:104px;display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--ink);padding-top:14px;"><span style="font-size:13px;font-weight:700;letter-spacing:0.08em;color:var(--ink);">07</span><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);">The price</span></div></div>
     <div style="min-width:0;">
-      <h2 style="margin:0;font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(32px,4.2vw,48px);line-height:1.1;letter-spacing:-0.015em;color:var(--ink);text-wrap:balance;max-width:20ch;">Step one finds where the work waits. Two add-ons answer your four questions.</h2>
+      <h2 style="margin:0;font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(32px,4.2vw,48px);line-height:1.1;letter-spacing:-0.015em;color:var(--ink);text-wrap:balance;max-width:20ch;">One price covers the interviews, the plan, and your next hire or machine.</h2>
       <div style="margin-top:28px;max-width:40em;display:flex;flex-direction:column;gap:20px;font-size:17px;line-height:1.65;">
-        <p style="text-wrap:pretty;">Step one comes first, and it is the most important part of the work: the drawing you check before you cut. Add either add-on, or both, and the total updates as you go.</p>
+        <p style="text-wrap:pretty;">Step one is the most important part of the work: the drawing you check before you cut. On October 9 you asked what to buy next. Step one answers that from your own jobs.</p>
       </div>
 
       <div data-gv-s07="" style="margin-top:48px;border-top:2px solid var(--ink);">
@@ -1646,7 +1633,6 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
           <span data-inclcell="" style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--muted);line-height:27px;">STEP ONE</span>
           <span data-inclcell="" style="display:grid;grid-template-columns:minmax(0,1fr);row-gap:6px;min-width:0;">
             <span style="font-family:'Playfair Display',serif;font-weight:600;font-size:22px;line-height:1.25;color:var(--ink);text-wrap:balance;">The diagnosis</span>
-            <span data-lmethod="" style="font-size:12.5px;font-weight:500;line-height:1.45;letter-spacing:0.005em;color:var(--body);text-wrap:pretty;"><span data-mlabel="" style="font-size:11px;font-weight:600;letter-spacing:0.06em;color:var(--evidence);margin-right:6px;">METHOD</span><span data-mname="">Constraint diagnosis: role interviews and a ten-job flow study</span></span>
           </span>
           <span data-inclcell="" data-inclprice="" style="font-family:'Hanken Grotesk','DM Sans',sans-serif;font-variant-numeric:tabular-nums lining-nums;font-size:20px;font-weight:600;line-height:27px;color:var(--ink);text-align:right;white-space:nowrap;">{{ basePriceText }}</span>
           <div data-inclbody="" style="grid-column:2 / -1;margin-top:10px;min-width:0;">
@@ -1654,96 +1640,82 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
               <li style="display:grid;grid-template-columns:10px minmax(0,1fr);gap:14px;align-items:baseline;padding:11px 0;border-top:1px solid var(--rule);font-size:16px;line-height:1.55;color:var(--body);text-wrap:pretty;"><span aria-hidden="true" style="width:6px;height:6px;background:var(--evidence);transform:translateY(-3px);"></span><span>The interviews with your people, about 15 minutes each.</span></li>
               <li style="display:grid;grid-template-columns:10px minmax(0,1fr);gap:14px;align-items:baseline;padding:11px 0;border-top:1px solid var(--rule);font-size:16px;line-height:1.55;color:var(--body);text-wrap:pretty;"><span aria-hidden="true" style="width:6px;height:6px;background:var(--evidence);transform:translateY(-3px);"></span><span>Your ten job dates, checked with you.</span></li>
               <li style="display:grid;grid-template-columns:10px minmax(0,1fr);gap:14px;align-items:baseline;padding:11px 0;border-top:1px solid var(--rule);font-size:16px;line-height:1.55;color:var(--body);text-wrap:pretty;"><span aria-hidden="true" style="width:6px;height:6px;background:var(--evidence);transform:translateY(-3px);"></span><span>The written plan: where the work waits, and the one thing to fix first.</span></li>
+              <li style="display:grid;grid-template-columns:10px minmax(0,1fr);gap:14px;align-items:baseline;padding:11px 0;border-top:1px solid var(--rule);font-size:16px;line-height:1.55;color:var(--body);text-wrap:pretty;"><span aria-hidden="true" style="width:6px;height:6px;background:var(--evidence);transform:translateY(-3px);"></span><span>Hire a second drafter or buy the machine: which pays back first, from your own jobs.</span></li>
+              <li style="display:grid;grid-template-columns:10px minmax(0,1fr);gap:14px;align-items:baseline;padding:11px 0;border-top:1px solid var(--rule);font-size:16px;line-height:1.55;color:var(--body);text-wrap:pretty;"><span aria-hidden="true" style="width:6px;height:6px;background:var(--evidence);transform:translateY(-3px);"></span><span>The funding application, with David, ready for you to submit.</span></li>
               <li style="display:grid;grid-template-columns:10px minmax(0,1fr);gap:14px;align-items:baseline;padding:11px 0;border-top:1px solid var(--rule);font-size:16px;line-height:1.55;color:var(--body);text-wrap:pretty;"><span aria-hidden="true" style="width:6px;height:6px;background:var(--evidence);transform:translateY(-3px);"></span><span>The follow-up proposal, with a price for each thing the plan says to build.</span></li>
             </ul>
-            <p style="padding-top:12px;border-top:1px solid var(--rule);max-width:40em;font-size:15px;line-height:1.6;color:var(--muted);text-wrap:pretty;">Every dollar comes off anything you hire us to build within 90 days of the review meeting.</p>
           </div>
         </div>
-        <div data-keep="" style="padding:14px 0 16px;border-bottom:1px solid var(--rule);">
-          <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:4px 24px;">
-            <p style="max-width:40em;font-size:16px;line-height:1.6;color:var(--body);text-wrap:pretty;">Also included, at no charge either way: the funding application, with David, as he wrote on October 11.</p>
-            <button type="button" data-noprint="" sc-camel-on-click="{{ toggleFund }}" aria-expanded="{{ fundOpen }}" aria-controls="gv-fund-body" style="background:none;border:0;padding:8px 0;font-size:15px;font-weight:600;color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:10px;min-height:44px;"><span aria-hidden="true" style="width:18px;height:18px;border:1px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;font-size:14px;line-height:1;">{{ fundSign }}</span>What’s in it</button>
-          </div>
+        <div data-keep="" style="padding:6px 0 8px;border-bottom:1px solid var(--rule);">
+          <button type="button" data-noprint="" sc-camel-on-click="{{ toggleHm }}" aria-expanded="{{ hmOpen }}" aria-controls="gv-hm-body" style="background:none;border:0;padding:8px 0;font-size:15px;font-weight:600;color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:10px;min-height:44px;text-align:left;"><span aria-hidden="true" style="width:18px;height:18px;flex:none;border:1px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;font-size:14px;line-height:1;">{{ hmSign }}</span>What’s in the hire-or-machine answer</button>
+          <sc-if value="{{ hmOpen }}" hint-placeholder-val="{{ false }}">
+            <div id="gv-hm-body" style="margin:4px 0 8px 28px;">
+              <sc-for list="{{ hmLayers }}" as="l" hint-placeholder-count="2">
+                <div style="padding:18px 0 20px;border-top:1px solid var(--rule);display:flex;flex-direction:column;gap:12px;">
+                  <span style="font-family:'Playfair Display',serif;font-weight:600;font-size:19px;line-height:1.25;color:var(--ink);text-wrap:balance;">{{ l.name }}</span>
+                  <p style="max-width:40em;font-size:16px;font-weight:500;line-height:1.5;color:var(--ink);text-wrap:pretty;">{{ l.q }}</p>
+                  <dl data-layerlines="" style="margin:0;display:flex;flex-direction:column;gap:10px;">
+                    <div style="display:grid;grid-template-columns:88px minmax(0,1fr);gap:4px 16px;align-items:baseline;"><dt style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">YOU GET</dt><dd style="margin:0;max-width:40em;font-size:16px;line-height:1.6;color:var(--body);text-wrap:pretty;">{{ l.get }}</dd></div>
+                    <div style="display:grid;grid-template-columns:88px minmax(0,1fr);gap:4px 16px;align-items:baseline;"><dt style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">IT TAKES</dt><dd style="margin:0;max-width:40em;font-size:16px;line-height:1.6;color:var(--body);text-wrap:pretty;">{{ l.takes }}</dd></div>
+                    <div style="display:grid;grid-template-columns:88px minmax(0,1fr);gap:4px 16px;align-items:baseline;"><dt style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">WHY NOW</dt><dd style="margin:0;max-width:40em;font-size:16px;line-height:1.6;color:var(--body);text-wrap:pretty;">{{ l.why }}</dd></div>
+                  </dl>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+        <div data-keep="" style="padding:6px 0 8px;border-bottom:1px solid var(--rule);">
+          <button type="button" data-noprint="" sc-camel-on-click="{{ toggleFund }}" aria-expanded="{{ fundOpen }}" aria-controls="gv-fund-body" style="background:none;border:0;padding:8px 0;font-size:15px;font-weight:600;color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:10px;min-height:44px;text-align:left;"><span aria-hidden="true" style="width:18px;height:18px;flex:none;border:1px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;font-size:14px;line-height:1;">{{ fundSign }}</span>What’s in the funding application</button>
           <sc-if value="{{ fundOpen }}" hint-placeholder-val="{{ false }}">
-            <div id="gv-fund-body" style="margin-top:12px;display:flex;flex-direction:column;gap:14px;min-width:0;">
-              <p style="max-width:40em;font-size:17px;font-weight:500;line-height:1.5;color:var(--ink);text-wrap:pretty;">What does the application need, and how do you tell your story in it?</p>
+            <div id="gv-fund-body" style="margin:4px 0 8px 28px;padding-top:18px;border-top:1px solid var(--rule);display:flex;flex-direction:column;gap:14px;min-width:0;">
+              <p style="max-width:40em;font-size:16px;font-weight:500;line-height:1.5;color:var(--ink);text-wrap:pretty;">What does the application need, and how do you tell your story in it?</p>
               <dl data-layerlines="" style="margin:0;display:flex;flex-direction:column;gap:10px;">
-                <div style="display:grid;grid-template-columns:88px minmax(0,1fr);gap:4px 16px;align-items:baseline;"><dt style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">YOU GET</dt><dd style="margin:0;max-width:40em;font-size:16px;line-height:1.6;color:var(--body);text-wrap:pretty;">As David wrote on October 11, he and Joey prepare the application material, including the written project plan with costs that goes in as the attachment. Layers 01, 03 and 04 each add proof the application can use. You submit it and speak for the business. The funder decides what it funds.</dd></div>
+                <div style="display:grid;grid-template-columns:88px minmax(0,1fr);gap:4px 16px;align-items:baseline;"><dt style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">YOU GET</dt><dd style="margin:0;max-width:40em;font-size:16px;line-height:1.6;color:var(--body);text-wrap:pretty;">As David wrote on October 11, he and Joey prepare the application material, including the written project plan with costs that goes in as the attachment. The machine payback work above becomes the equipment part of that plan. You submit it and speak for the business. The funder decides what it funds.</dd></div>
                 <div style="display:grid;grid-template-columns:88px minmax(0,1fr);gap:4px 16px;align-items:baseline;"><dt style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">IT TAKES</dt><dd style="margin:0;max-width:40em;font-size:16px;line-height:1.6;color:var(--body);text-wrap:pretty;">The papers on David’s October 11 list. Two calls with David.</dd></div>
                 <div style="display:grid;grid-template-columns:88px minmax(0,1fr);gap:4px 16px;align-items:baseline;"><dt style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">WHY NOW</dt><dd style="margin:0;max-width:40em;font-size:16px;line-height:1.6;color:var(--body);text-wrap:pretty;">Randy, October 9: “I haven’t been able to put out the big one yet.”</dd></div>
+                <div style="display:grid;grid-template-columns:88px minmax(0,1fr);gap:4px 16px;align-items:baseline;"><dt style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">PRICE</dt><dd style="margin:0;max-width:40em;font-size:16px;line-height:1.6;color:var(--body);text-wrap:pretty;">{{ fundingPriceText }}</dd></div>
               </dl>
             </div>
           </sc-if>
         </div>
-        <sc-for list="{{ addons }}" as="a" hint-placeholder-count="2">
-          <div data-keep="" data-gv-addon="" data-on="{{ a.on }}" style="padding:22px 0 24px;border-bottom:1px solid var(--rule);">
-            <sc-if value="{{ a.rec }}" hint-placeholder-val="{{ false }}"><p data-gv-rec="" style="margin:0 0 10px 38px;font-size:10.5px;font-weight:800;letter-spacing:0.08em;color:var(--evidence);">WE RECOMMEND</p></sc-if>
-            <label data-layerhead="" style="display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:6px 16px;align-items:start;cursor:pointer;">
-              <input type="checkbox" checked="{{ a.checked }}" sc-camel-on-change="{{ a.toggle }}" aria-label="{{ a.aria }}" style="width:20px;height:20px;margin:4px 0 0;accent-color:var(--evidence);cursor:pointer;">
-              <span style="display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;row-gap:6px;align-items:baseline;min-width:0;">
-                <span style="font-size:13px;font-weight:700;letter-spacing:0.08em;color:var(--ink);">{{ a.num }}</span>
-                <span style="font-family:'Playfair Display',serif;font-weight:600;font-size:22px;line-height:1.25;color:var(--ink);text-wrap:balance;">{{ a.name }}</span>
-                <span data-lmethod="" style="grid-column:2;font-size:12.5px;font-weight:500;line-height:1.45;letter-spacing:0.005em;color:var(--body);text-wrap:pretty;"><span data-mlabel="" style="font-size:11px;font-weight:600;letter-spacing:0.06em;color:var(--evidence);margin-right:6px;">METHOD</span><span data-mname="">{{ a.method }}</span></span>
-              </span>
-              <span data-layerprice="" style="font-family:'Hanken Grotesk','DM Sans',sans-serif;font-variant-numeric:tabular-nums lining-nums;font-size:20px;font-weight:600;line-height:27px;color:var(--ink);text-align:right;white-space:nowrap;">{{ a.priceText }}</span>
-            </label>
-            <div data-gv-addonbody="" style="margin:12px 0 0 38px;display:flex;flex-direction:column;gap:6px;min-width:0;">
-              <p style="max-width:40em;font-size:17px;font-weight:500;line-height:1.5;color:var(--ink);text-wrap:pretty;">{{ a.q }}</p>
-              <div><button type="button" data-noprint="" sc-camel-on-click="{{ a.toggleOpen }}" aria-expanded="{{ a.open }}" style="background:none;border:0;padding:8px 0;font-size:15px;font-weight:600;color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:10px;min-height:44px;"><span aria-hidden="true" style="width:18px;height:18px;border:1px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;font-size:14px;line-height:1;">{{ a.sign }}</span>What’s in it</button></div>
-              <sc-if value="{{ a.open }}" hint-placeholder-val="{{ false }}">
-                <div data-gv-layers="" style="margin-top:6px;">
-                  <sc-for list="{{ a.layers }}" as="l" hint-placeholder-count="2">
-                    <div style="padding:18px 0 20px;border-top:1px solid var(--rule);display:flex;flex-direction:column;gap:12px;">
-                      <span style="display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;row-gap:6px;align-items:baseline;min-width:0;">
-                        <span style="font-size:12px;font-weight:700;letter-spacing:0.08em;color:var(--ink);">{{ l.num }}</span>
-                        <span style="font-family:'Playfair Display',serif;font-weight:600;font-size:19px;line-height:1.25;color:var(--ink);text-wrap:balance;">{{ l.name }}</span>
-                        <span data-lmethod="" style="grid-column:2;font-size:12.5px;font-weight:500;line-height:1.45;letter-spacing:0.005em;color:var(--body);text-wrap:pretty;"><span data-mlabel="" style="font-size:11px;font-weight:600;letter-spacing:0.06em;color:var(--evidence);margin-right:6px;">METHOD</span><span data-mname="">{{ l.method }}</span></span>
-                      </span>
-                      <p style="max-width:40em;font-size:16px;font-weight:500;line-height:1.5;color:var(--ink);text-wrap:pretty;">{{ l.q }}</p>
-                      <dl data-layerlines="" style="margin:0;display:flex;flex-direction:column;gap:10px;">
-                        <div style="display:grid;grid-template-columns:88px minmax(0,1fr);gap:4px 16px;align-items:baseline;"><dt style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">YOU GET</dt><dd style="margin:0;max-width:40em;font-size:16px;line-height:1.6;color:var(--body);text-wrap:pretty;">{{ l.get }}</dd></div>
-                        <div style="display:grid;grid-template-columns:88px minmax(0,1fr);gap:4px 16px;align-items:baseline;"><dt style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">IT TAKES</dt><dd style="margin:0;max-width:40em;font-size:16px;line-height:1.6;color:var(--body);text-wrap:pretty;">{{ l.takes }}</dd></div>
-                        <div style="display:grid;grid-template-columns:88px minmax(0,1fr);gap:4px 16px;align-items:baseline;"><dt style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">WHY NOW</dt><dd style="margin:0;max-width:40em;font-size:16px;line-height:1.6;color:var(--body);text-wrap:pretty;">{{ l.why }}</dd></div>
-                      </dl>
-                    </div>
-                  </sc-for>
-                </div>
-              </sc-if>
-            </div>
-          </div>
-        </sc-for>
-        <sc-if value="{{ recBoth }}" hint-placeholder-val="{{ false }}"><p style="padding:14px 0;border-bottom:1px solid var(--rule);font-size:11px;font-weight:800;letter-spacing:0.08em;color:var(--evidence);">WE RECOMMEND: both add-ons</p></sc-if>
       </div>
-      <p style="margin-top:16px;max-width:40em;font-size:14px;font-weight:500;line-height:1.55;color:var(--muted);text-wrap:pretty;">Both add-ons answer all four of your questions at the same review meeting. Or start with step one alone. Choose an add-on before the interviews close and it arrives at that same meeting. After the review, you can still ask for one, and we agree a date then.</p>
+      <p style="margin-top:16px;max-width:40em;font-size:14px;font-weight:500;line-height:1.55;color:var(--muted);text-wrap:pretty;">Want it in smaller pieces? <button type="button" data-noprint="" sc-camel-on-click="{{ tell.smaller }}" style="background:none;border:0;padding:6px 0;font:inherit;color:var(--muted);text-decoration:underline;text-decoration-color:var(--rule);text-underline-offset:0.2em;cursor:pointer;" style-hover="color:var(--ink);text-decoration-color:var(--ink);">Ask us</button>, and we’ll work it out with you.</p>
 
-      <p style="margin-top:20px;max-width:40em;font-size:15px;line-height:1.6;color:var(--muted);text-wrap:pretty;">A website review and a 2027 selling plan can wait until the shop can take more work. If the plan says otherwise, they come back in the follow-up proposal.</p>
+      <p style="margin-top:20px;max-width:40em;font-size:15px;line-height:1.6;color:var(--muted);text-wrap:pretty;">Profit by job type, the cash each truck ties up, a website review and a 2027 selling plan can all wait. If the plan puts one of them first, it comes back in the follow-up proposal with its own price.</p>
 
       <div style="margin-top:48px;border-top:2px solid var(--ink);">
-        <div data-keep="" style="padding:24px 0;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px 40px;border-bottom:1px solid var(--rule);">
+        <div data-keep="" data-gv-pricebox="" style="padding:24px 0;border-bottom:1px solid var(--rule);">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px 40px;">
           <div style="display:flex;flex-direction:column;gap:8px;min-width:0;max-width:32em;">
-            <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">YOUR SELECTION</span>
-            <span style="font-size:20px;font-weight:600;line-height:1.3;color:var(--ink);">{{ selName }}</span>
-            <span style="font-size:16px;line-height:1.5;color:var(--body);">{{ selDetail }}</span>
+            <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">STEP ONE</span>
+            <span style="font-size:20px;font-weight:600;line-height:1.3;color:var(--ink);text-wrap:pretty;">The interviews, the plan, the hire-or-machine answer and the funding application.</span>
+            <span style="font-size:16px;line-height:1.5;color:var(--body);text-wrap:pretty;">{{ hoursText }}</span>
           </div>
-          <div aria-live="polite" style="margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:10px;text-align:right;">
-            <span style="font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(44px,6vw,72px);line-height:1;letter-spacing:-0.01em;color:var(--ink);font-variant-numeric:lining-nums;white-space:nowrap;"><span style="font-family:'DM Sans',sans-serif;font-size:0.4em;font-weight:600;letter-spacing:0;vertical-align:0.95em;margin-right:0.06em;">{{ totalCur }}</span>{{ totalNum }}</span>
+          <div data-gv-pricefig="" style="margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:10px;text-align:right;">
+            <span style="font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(44px,6vw,72px);line-height:1;letter-spacing:-0.01em;color:var(--ink);font-variant-numeric:lining-nums;white-space:nowrap;"><span style="font-family:'DM Sans',sans-serif;font-size:0.4em;font-weight:600;letter-spacing:0;vertical-align:0.95em;margin-right:0.06em;">C$</span>{{ totalNum }}</span>
             <span style="font-size:14px;color:var(--muted);">Canadian dollars, plus GST.</span>
           </div>
+        </div>
+        <div data-gv-credit="" style="margin-top:22px;padding-top:18px;border-top:1px solid var(--rule);display:flex;flex-direction:column;gap:8px;">
+          <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">CREDITED IN FULL</span>
+          <p style="max-width:32em;font-family:'Playfair Display',serif;font-size:clamp(20px,2vw,24px);line-height:1.4;color:var(--ink);text-wrap:pretty;">Every dollar of it comes off what we build for you next.</p>
+          <p style="max-width:40em;font-size:16px;line-height:1.6;color:var(--body);text-wrap:pretty;">Hire us for any build within 90 days of the review meeting, and the full C$18,500 comes off its price.</p>
+        </div>
         </div>
 
         <dl data-terms="" style="margin:0;">
           <div data-keep="" style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:4px 24px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--rule);"><dt style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">BILLING</dt><dd style="margin:0;max-width:40em;font-size:16px;line-height:1.6;color:var(--body);text-wrap:pretty;">{{ billingLine }}</dd></div>
-          <div data-keep="" style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:4px 24px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--rule);"><dt style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">CREDIT</dt><dd style="margin:0;max-width:40em;font-size:16px;line-height:1.6;color:var(--body);text-wrap:pretty;">Every dollar comes off anything you hire us to build within 90 days of the review meeting.</dd></div>
-          <div data-keep="" style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:4px 24px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--rule);"><dt style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">TIMING</dt><dd style="margin:0;max-width:40em;font-size:16px;line-height:1.6;color:var(--body);text-wrap:pretty;">Add-ons arrive at the same review meeting, if the records they need reach us in the first week. You can add one until the interviews close. An add-on added late can move the review by a week.</dd></div>
+          <div data-keep="" style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:4px 24px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--rule);"><dt style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">CREDIT</dt><dd style="margin:0;max-width:40em;font-size:16px;line-height:1.6;color:var(--body);text-wrap:pretty;">Every dollar comes off anything we build for you within 90 days of the review meeting.</dd></div>
+          <div data-keep="" style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:4px 24px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--rule);"><dt style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">TIMING</dt><dd style="margin:0;max-width:40em;font-size:16px;line-height:1.6;color:var(--body);text-wrap:pretty;">The review meeting is about 3 weeks after the links open, if the three records for the hire-or-machine answer reach us in the first week. If they come later, the review can move by a week, and we tell you the new date in writing.</dd></div>
           <div data-keep="" style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:4px 24px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--rule);"><dt style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">FUNDING</dt><dd style="margin:0;max-width:40em;font-size:16px;line-height:1.6;color:var(--body);text-wrap:pretty;">If you apply for funding, the funder decides what counts. Every dollar you pay us gets a paid invoice.</dd></div>
         </dl>
 
         <div data-keep="" style="margin-top:32px;max-width:760px;background:var(--surface);padding:clamp(24px,4vw,36px);">
           <p style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">IF THE PLAN FALLS SHORT</p>
-          <p style="margin-top:12px;font-family:'Playfair Display',serif;font-size:clamp(20px,2vw,24px);line-height:1.4;color:var(--ink);text-wrap:pretty;">The plan has to show one change worth more than the add-ons cost, counted in its first year, in your own numbers. If it falls short, you don’t pay for the add-ons, and the first half comes back. You decide whether it cleared that bar.</p>
+          <p style="margin-top:12px;font-family:'Playfair Display',serif;font-size:clamp(20px,2vw,24px);line-height:1.4;color:var(--ink);text-wrap:pretty;">The plan has to show one change worth more than C$18,500, counted in its first year, in your own numbers. If it falls short, you don’t pay the second half. You decide whether it cleared that bar.</p>
         </div>
 
-        <p data-noprint="" style="margin-top:28px;font-size:17px;font-weight:600;"><a href="#confirm" sc-camel-on-click="{{ chooseInConfirm }}">Choose these in Section 09.</a></p>
+        <p data-noprint="" style="margin-top:28px;font-size:17px;font-weight:600;"><a href="#confirm" sc-camel-on-click="{{ chooseInConfirm }}">Sign and start in Section 09.</a></p>
       </div>
     </div>
   </div>
@@ -1770,7 +1742,7 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
         <p style="padding:18px 0;border-bottom:1px solid var(--rule);font-size:17px;line-height:1.6;text-wrap:pretty;">We keep the raw answers for 7 days after the last interview closes, and delete them by {{ deleteBy }}. We email you when it is done. Our notes on what we found are kept to write the plan, and the written plan stays with you.</p>
         <p style="padding:18px 0;border-bottom:1px solid var(--rule);font-size:17px;line-height:1.6;text-wrap:pretty;">The interviews never ask about your drawings, customers, or prices.</p>
         <p style="padding:18px 0;border-bottom:1px solid var(--rule);font-size:17px;line-height:1.6;text-wrap:pretty;">We collect only what the interviews ask. Nothing comes from your computers or files.</p>
-        <p style="padding:18px 0;border-bottom:1px solid var(--rule);font-size:17px;line-height:1.6;text-wrap:pretty;">If you choose an add-on in Section 07, you send only the records it lists, such as invoices or a drawing list. We treat them as confidential under the NDA, and we return or delete them when the work ends, or sooner if you ask.</p>
+        <p style="padding:18px 0;border-bottom:1px solid var(--rule);font-size:17px;line-height:1.6;text-wrap:pretty;">For the hire-or-machine answer, you send only three records: your drawing list, last year’s cutting invoices, and any machine quotes you have. We treat them as confidential under the NDA, and we return or delete them when the work ends, or sooner if you ask.</p>
       </div>
         </sc-if>
       </div>
@@ -1827,24 +1799,18 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
         <form sc-camel-on-submit="{{ submitConfirm }}" data-noprint="" style="margin-top:32px;border:1px solid var(--ink);">
           <div style="padding:18px 24px;border-bottom:1px solid var(--ink);display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;">
             <span style="font-family:'Playfair Display',serif;font-weight:600;font-size:22px;color:var(--ink);">{{ confirmLabel }}</span>
-            <a href="#who-takes-it" style="font-size:14px;color:var(--muted);">Change who takes it</a>
+            <a href="#who-takes-it" style="font-size:14px;color:var(--muted);">Change who takes the interviews</a>
           </div>
           <div style="padding:18px 24px 20px;border-bottom:1px solid var(--rule);display:flex;flex-direction:column;gap:12px;">
             <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px 16px;flex-wrap:wrap;">
               <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--evidence);">WHAT YOU CHOSE</span>
-              <a href="#go-deeper" style="font-size:14px;color:var(--muted);">Change in Section 07.</a>
+              <a href="#go-deeper" style="font-size:14px;color:var(--muted);">See what’s in it in Section 07.</a>
             </div>
             <div style="display:flex;flex-direction:column;gap:4px;">
               <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;"><span style="min-width:0;max-width:40em;font-size:16px;font-weight:600;line-height:1.5;color:var(--ink);text-wrap:pretty;">{{ choseInterviews }}</span><span style="font-family:'Hanken Grotesk','DM Sans',sans-serif;font-variant-numeric:tabular-nums lining-nums;font-size:16px;font-weight:600;color:var(--ink);white-space:nowrap;">{{ basePriceText }}</span></div>
-              <span style="font-size:16px;font-weight:600;line-height:1.5;color:var(--ink);text-wrap:pretty;">The funding application, with David. No charge.</span>
+              <span style="font-size:16px;font-weight:600;line-height:1.5;color:var(--ink);text-wrap:pretty;">Included: the hire-or-machine answer and the funding application, with David.</span>
+              <span style="font-size:15px;line-height:1.5;color:var(--muted);text-wrap:pretty;">Credited in full to anything we build for you within 90 days of the review meeting.</span>
             </div>
-            <sc-if value="{{ hasAddons }}" hint-placeholder-val="{{ false }}">
-              <div style="border-top:1px solid var(--rule);padding-top:12px;display:flex;flex-direction:column;gap:6px;">
-                <sc-for list="{{ choseRows }}" as="r" hint-placeholder-count="4">
-                  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;font-size:15px;line-height:1.5;color:var(--body);"><span style="min-width:0;">{{ r.label }}</span><span style="font-family:'Hanken Grotesk','DM Sans',sans-serif;font-variant-numeric:tabular-nums lining-nums;font-weight:600;color:var(--ink);white-space:nowrap;">{{ r.price }}</span></div>
-                </sc-for>
-              </div>
-            </sc-if>
             <div style="border-top:1px solid var(--ink);padding-top:12px;display:flex;justify-content:flex-end;">
               <span style="font-family:'Hanken Grotesk','DM Sans',sans-serif;font-variant-numeric:tabular-nums lining-nums;font-size:24px;font-weight:600;line-height:1.1;color:var(--ink);white-space:nowrap;">{{ choseTotal }}</span>
             </div>
@@ -1956,7 +1922,7 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
         </div>
       </div>
 
-      <p data-keep="" style="margin-top:56px;padding-top:28px;border-top:1px solid var(--ink);font-family:'Playfair Display',serif;font-size:clamp(22px,2.4vw,28px);line-height:1.4;color:var(--ink);max-width:30em;text-wrap:pretty;">Step one is C$3,000, and every dollar comes off anything you hire us to build within 90 days of the review meeting. Every price for step one is on this page. Both documents are yours. If the plan says the right answer is to build nothing, that is what it will say.</p>
+      <p data-keep="" style="margin-top:56px;padding-top:28px;border-top:1px solid var(--ink);font-family:'Playfair Display',serif;font-size:clamp(22px,2.4vw,28px);line-height:1.4;color:var(--ink);max-width:30em;text-wrap:pretty;">Step one is C$18,500, and every dollar comes off anything we build for you within 90 days of the review meeting. Every price for step one is on this page. Both documents are yours. If the plan says the right answer is to build nothing, that is what it will say.</p>
 
       <div data-keep="" style="margin-top:44px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:28px;">
         <div style="display:flex;flex-wrap:wrap;gap:24px 48px;">
@@ -1995,7 +1961,7 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:4px 24px;padding:14px 0;border-bottom:1px solid var(--rule);font-size:15px;"><dt style="font-weight:600;color:var(--ink);">About 3 months booked</dt><dd style="margin:0;color:var(--body);">Yours. Randy, October 9, morning call.</dd></div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:4px 24px;padding:14px 0;border-bottom:1px solid var(--rule);font-size:15px;"><dt style="font-weight:600;color:var(--ink);">4 or 5 jobs at once, up from 2</dt><dd style="margin:0;color:var(--body);">Yours. Randy, October 9, afternoon call.</dd></div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:4px 24px;padding:14px 0;border-bottom:1px solid var(--rule);font-size:15px;"><dt style="font-weight:600;color:var(--ink);">About 15 minutes a person, and every date on this page</dt><dd style="margin:0;color:var(--body);">Ours. Set on this page.</dd></div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:4px 24px;padding:14px 0;border-bottom:1px solid var(--rule);font-size:15px;"><dt style="font-weight:600;color:var(--ink);">Step one, add-on prices and the total</dt><dd style="margin:0;color:var(--body);">Ours. Set on this page.</dd></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:4px 24px;padding:14px 0;border-bottom:1px solid var(--rule);font-size:15px;"><dt style="font-weight:600;color:var(--ink);">The step one price</dt><dd style="margin:0;color:var(--body);">Ours. Set on this page.</dd></div>
       </dl>
     </div>
   </div>
@@ -2078,31 +2044,19 @@ class Component extends DCLogic {
     ndaSignedAt: null,
     formOpen: false, signer: 'Randy Gordey', coordinator: 'Randy Gordey', walk: 'screen', funding: true, consent: false, consent2For: null, notesLog: [], submit: 'idle',
     cardFull: false, followOpen: false, aaronOpen: false, whereOpen: false, overlay: false,
-    addonIds: [], addonOpen: {}, fundOpen: false, receipt: null
+    hmOpen: false, fundOpen: false, receipt: null
   };
-  SIGNED_KEY = 'gvc_signed_record_v1';
-  CONSENT = 'I sign the mutual NDA for the business named above, and I agree to sign it electronically. I confirm the interviews, the written plan and the follow-up proposal. Every price for step one is on this page. Any other paid work needs a separate approval.';
+  SIGNED_KEY = 'gvc_signed_record_v7';
+  CONSENT = 'I sign the mutual NDA for the business named above, and I agree to sign it electronically. I confirm the interviews, the written plan, the hire-or-machine answer, the funding application and the follow-up proposal. Every price for step one is on this page. Any other paid work needs a separate approval.';
   PARTY_ONE = 'Palomo Capital Group LLC, doing business as eCommerce Texas, and David Nagy Enterprises, doing business as eCommerce Canada, together for eCommerce Inc.';
   NDA_PDF = 'GordeyVilleCustoms_Mutual_NDA_eCommerceInc_v1_101726.pdf';
   LAYERS = [
-    { id: 'l1', num: '01', name: 'Profit by job type', price: 5625, hours: 1, group: 'now',
-      method: 'Contribution margin by job family, with a price-realization test',
-      q: 'Which jobs make money, and which only keep the bays full?',
-      get: 'Profit by job type and by customer, from your invoices and your rough shop hours. What steel has done to each job type’s margin since 2024. How long a quote takes, and which ones aren’t worth the hours. One price change to test first, and how to test it without losing the work you want.',
-      takes: 'Last year’s invoices from QuickBooks and the steel price history from your supplier, which David’s October 11 list already asks for. About an hour for whoever keeps the books.',
-      why: 'Randy, October 9: “growing because the demand is there, but the profits aren’t.”' },
     { id: 'l2', num: '02', name: 'Drafting capacity', price: 4375, hours: 0.75, group: 'now',
       method: 'Drafting throughput study: queue time, reuse rate, hire or not',
       q: 'How long does each job wait for a drawing, and how many could start from one you already own?',
       get: 'Each drawing your list and job dates cover from the last 12 months, sorted by how long it waited and how much was reused. Where a date is missing, we mark it missing and do not guess. Whether a second drafter, the drawings you own, or a complete drawing request takes the most off Jesse’s desk, in hours.',
       takes: 'Your drawing list and job dates. 45 minutes on a shared screen with Jesse and Dave.',
       why: 'Randy, October 9: “We’re looking at another drafter.”' },
-    { id: 'l3', num: '03', name: 'Cash from yes to paid', price: 3750, hours: 0.5, group: 'now',
-      method: 'Cash conversion cycle and working-capital analysis',
-      q: 'How much cash does each truck tie up, and for how long, before the customer pays?',
-      get: 'Each job’s cash timeline: deposit, steel bought, out the door, paid. What staging steel ahead of the bays ties up, and how deposits or progress billing could carry it. Where a job gets retyped or chased between the quote and QuickBooks.',
-      takes: 'Last year’s invoices and deposits from QuickBooks. 30 minutes on a screen with Robin.',
-      why: 'Randy, October 9: “I gotta think speed, quality, and length out the door for like payment wise.”' },
     { id: 'l4', num: '04', name: 'Machine payback', price: 5625, hours: 1, group: 'now',
       method: 'Capital budgeting: payback and net present value by machine',
       q: 'Laser table, tube cutter, or keep sending cutting out? Which one pays back first on your own jobs?',
@@ -2110,12 +2064,9 @@ class Component extends DCLogic {
       takes: 'Last year’s cutting invoices and the supplier quotes you have, which the funding application needs anyway. About an hour.',
       why: 'Randy, October 9: “what our next tool that we should be buying?”' }
   ];
-  BASE = { name: 'Step one: the diagnosis', price: 3000 };
-  REC = 'A';
-  ADDONS = [
-    { id: 'a1', num: 'A', name: 'The next hire or machine', method: 'Capacity investment decision: second drafter versus capital equipment', q: 'Hire a second drafter, or buy the machine? Which pays back first, from your own jobs.', layers: ['l2', 'l4'] },
-    { id: 'a2', num: 'B', name: 'Where the money goes', method: 'Contribution margin and cash conversion, by job type', q: 'Which jobs make money, and how long each truck ties up cash before you get paid.', layers: ['l1', 'l3'] }
-  ];
+  BASE = { name: 'Step one', price: 18500 };
+  FUNDING_ALONE = 5250;
+  VERSION = 'gv-v7.0';
   DEMO = [900, 1700, 1800, 900, 1900, 750, 850, 1400, 900, 1700, 1500, 900, 1500, 1800, 900, 1900, 1600, 900, 1700, 1800, 3800];
   demoRef = React.createRef();
   coverRef = React.createRef();
@@ -2125,12 +2076,12 @@ class Component extends DCLogic {
   hwLayer = React.createRef();
   SECTIONS = [
     { id: 'what-we-heard', num: '01', label: 'What we heard', g: 'why-this' },
-    { id: 'the-size', num: '02', label: 'The size of it', g: 'why-this' },
+    { id: 'the-size', num: '02', label: 'Your shop today', g: 'why-this' },
     { id: 'step-one', num: '03', label: 'Step one', g: 'the-interviews' },
-    { id: 'who-takes-it', num: '04', label: 'Who takes it', g: 'the-interviews' },
+    { id: 'who-takes-it', num: '04', label: 'Who takes the interviews', g: 'the-interviews' },
     { id: 'what-comes-back', num: '05', label: 'What comes back', g: 'what-you-get' },
     { id: 'who-does-the-work', num: '06', label: 'Who does the work', g: 'what-you-get' },
-    { id: 'go-deeper', num: '07', label: 'Go deeper', g: 'go-deeper' },
+    { id: 'go-deeper', num: '07', label: 'The price', g: 'go-deeper' },
     { id: 'where-answers-go', num: '08', label: 'Where your answers go', g: 'sign-and-start' },
     { id: 'confirm', num: '09', label: 'Sign and start', g: 'sign-and-start' }
   ];
@@ -2275,7 +2226,7 @@ class Component extends DCLogic {
     const ctl = window.AbortController ? new AbortController() : null;
     const t = setTimeout(() => ctl && ctl.abort(), 15000);
     return fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctl ? ctl.signal : undefined,
-      body: JSON.stringify({ type, page: 'GordeyVilleCustoms_Preliminary_Proposal', sentAt: new Date().toISOString(), data }) })
+      body: JSON.stringify({ type, page: 'GordeyVilleCustoms_Preliminary_Proposal', version: this.VERSION, sentAt: new Date().toISOString(), data }) })
       .then(r => r.ok ? r.json().then(j => ({ ok: true, id: (j && j.id) || '' }), () => ({ ok: true, id: '' })) : { ok: false })
       .catch(() => ({ ok: false })).finally(() => clearTimeout(t));
   }
@@ -2302,21 +2253,14 @@ class Component extends DCLogic {
     const close = this.addDays(open, 7), del = this.addDays(close, 7);
     let review = this.addDays(open, 21);
     if (review.getDay() === 6) review = this.addDays(review, 2); else if (review.getDay() === 0) review = this.addDays(review, 1);
-    const groups = [['why-this', 'Why this', '01, 02'], ['the-interviews', 'The interviews', '03, 04'], ['what-you-get', 'What you get', '05, 06'], ['go-deeper', 'Go deeper', '07'], ['sign-and-start', 'Sign and start', '08, 09']];
+    const groups = [['why-this', 'Your shop', '01, 02'], ['the-interviews', 'The interviews', '03, 04'], ['what-you-get', 'What you get', '05, 06'], ['go-deeper', 'The price', '07'], ['sign-and-start', 'Sign and start', '08, 09']];
     const fmtC = v => 'C$' + v.toLocaleString('en-US');
     const secNow = this.SECTIONS.find(x => x.id === s.activeSec);
     const layerOf = id => this.LAYERS.find(l => l.id === id);
-    const addonPrice = a => a.layers.reduce((x, id) => x + layerOf(id).price, 0);
-    const addonSet = new Set(s.addonIds);
-    const pickedAddons = this.ADDONS.filter(a => addonSet.has(a.id));
-    const picked = new Set(pickedAddons.flatMap(a => a.layers));
-    const pickedLayers = this.LAYERS.filter(l => picked.has(l.id));
-    const k = pickedLayers.length;
-    const total = this.BASE.price + pickedLayers.reduce((a, l) => a + l.price, 0);
-    const hrs = Math.round(pickedLayers.reduce((a, l) => a + l.hours, 0) * 2) / 2;
-    const lower = t => t.charAt(0).toLowerCase() + t.slice(1);
-    const selectionName = pickedAddons.length === 2 ? 'Step one and both add-ons' : pickedAddons.length === 1 ? 'Step one and ' + lower(pickedAddons[0].name) : 'Step one';
-    const hoursText = hrs === 0 ? 'No time beyond the interviews and job dates.' : hrs === 0.5 ? 'About half an hour more of your team’s time.' : `About ${hrs} more ${hrs === 1 ? 'hour' : 'hours'} of your team’s time.`;
+    const pickedLayers = ['l2', 'l4'].map(layerOf);
+    const total = this.BASE.price;
+    const selectionName = 'Step one';
+    const hoursText = 'About two hours of your team’s time beyond the interviews: 45 minutes on a screen with Jesse and Dave, and about an hour pulling cutting invoices and machine quotes.';
     const nda = s.nda;
     const norm = v => String(v || '').trim().replace(/\s+/g, ' ').toLowerCase();
     const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(nda.email.trim());
@@ -2327,7 +2271,8 @@ class Component extends DCLogic {
       wait: () => this.openNotes('What we heard: The wait'),
       drawings: () => this.openNotes('What we heard: Drawings'),
       method: () => this.openNotes('What we heard: The method'),
-      general: (e) => { if (e) e.preventDefault(); this.openNotes('This page'); }
+      general: (e) => { if (e) e.preventDefault(); this.openNotes('This page'); },
+      smaller: () => this.openNotes('Step one in smaller pieces')
     };
     const ndaSet = {};
     ['legal', 'name', 'title', 'address', 'email', 'signature'].forEach(f => { ndaSet[f] = e => { const v = e.target.value; this.setState(st => ({ nda: { ...st.nda, [f]: v } })); }; });
@@ -2337,7 +2282,7 @@ class Component extends DCLogic {
     const interviewsWord = n === 1 ? '1 interview' : `${n} interviews`;
     const totalPlus = fmtC(total) + ' plus GST';
     const consent2Text = `I approve ${selectionName} at ${fmtC(total)} plus GST, billed half on the first invoice and half at the review meeting.`;
-    const pickedKey = ['base', ...[...s.addonIds].sort()].join(',');
+    const pickedKey = 'base';
     const consent2 = s.consent2For === pickedKey;
     const legalName = nda.legal.trim() || 'your business';
     const restatement = `You are signing the NDA for ${legalName}, confirming ${interviewsWord}, and approving ${selectionName} at ${fmtC(total)} plus GST.`;
@@ -2406,23 +2351,14 @@ class Component extends DCLogic {
       storageLine: this.props.storageLine ?? 'Your answers are kept for a short time and are not shared with anyone else.',
       basePriceText: fmtC(this.BASE.price),
       fundOpen: !!s.fundOpen, fundSign: s.fundOpen ? '−' : '+', toggleFund: () => this.setState(st => ({ fundOpen: !st.fundOpen })),
-      addons: this.ADDONS.map(a => {
-        const on = addonSet.has(a.id), open = !!(s.addonOpen || {})[a.id], price = addonPrice(a);
-        return { num: a.num, name: a.name, method: a.method, q: a.q, priceText: '+ ' + fmtC(price), checked: on, on: on ? 'true' : 'false',
-          rec: this.REC === 'A' && a.id === 'a1', aria: `Add-on ${a.num}, ${a.name}, ${fmtC(price)} plus GST`,
-          toggle: e => { const v = e.target.checked; this.setState(st => ({ consent2For: null, addonIds: v ? [...st.addonIds.filter(x => x !== a.id), a.id] : st.addonIds.filter(x => x !== a.id) })); },
-          open, sign: open ? '−' : '+', toggleOpen: () => this.setState(st => ({ addonOpen: { ...st.addonOpen, [a.id]: !(st.addonOpen || {})[a.id] } })),
-          layers: a.layers.map(layerOf).map(l => ({ num: l.num, name: l.name, method: l.method, q: l.q, get: l.get, takes: l.takes, why: l.why })) };
-      }),
-      recBoth: this.REC === 'BOTH',
-      selName: selectionName,
-      selDetail: hoursText,
-      totalCur: 'C$', totalNum: total.toLocaleString('en-US'),
+      hmOpen: !!s.hmOpen, hmSign: s.hmOpen ? '−' : '+', toggleHm: () => this.setState(st => ({ hmOpen: !st.hmOpen })),
+      hmLayers: pickedLayers.map(l => ({ name: l.name, q: l.q, get: l.get, takes: l.takes, why: l.why })),
+      fundingPriceText: `Included in step one at no charge. On its own, without step one, it is ${fmtC(this.FUNDING_ALONE)}, plus GST.`,
+      hoursText,
+      totalNum: total.toLocaleString('en-US'),
       billingLine: (be => `Half on the first invoice, which comes with the countersigned NDA. Half at the review meeting. Billed in Canadian dollars, plus GST${be ? ', by ' + be : ''}.`)((this.props.billingEntity || '').trim()),
       chooseInConfirm: e => { e.preventDefault(); this.setState({ formOpen: true }); requestAnimationFrame(() => { const el = document.getElementById('confirm'); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 96, behavior: 'smooth' }); }); },
       choseInterviews: `${interviewsWord}, the job dates, the written plan and the follow-up proposal.`,
-      hasAddons: pickedAddons.length > 0,
-      choseRows: pickedAddons.map(a => ({ label: `${a.num} · ${a.name}`, price: fmtC(addonPrice(a)) })),
       choseTotal: totalPlus,
       consent2, consent2Text,
       toggleConsent2: e => { const on = e.target.checked; this.setState({ consent2For: on ? pickedKey : null }); },
@@ -2477,16 +2413,16 @@ class Component extends DCLogic {
         const draft = s.notesText.trim();
         if (draft && s.noteStatus !== 'received' && !log.some(x => x.text === draft)) log.push({ about: s.notesContext, text: draft, at: new Date().toISOString(), sent: false, draft: true });
         const data = {
-          version: 'gv-v6.0',
+          version: this.VERSION,
           nda: { legal: nda.legal.trim(), address: nda.address.trim(), name: nda.name.trim(), title: nda.title.trim(), email: nda.email.trim(), signature: nda.signature.trim(),
             authorized: true, agreedToElectronicSignature: true, pdf: this.NDA_PDF, pdfSha256, partyOne: this.PARTY_ONE },
           consent: { ndaAndStepOne: this.CONSENT, approval: consent2Text },
           restatement,
-          choice: { selection: selectionName, base: { name: this.BASE.name, price: this.BASE.price }, addonIds: pickedAddons.map(a => a.id),
-            addons: pickedAddons.map(a => ({ id: a.id, number: a.num, name: a.name, price: addonPrice(a), layers: a.layers })), layerIds: pickedLayers.map(l => l.id),
-            layers: pickedLayers.map(l => ({ id: l.id, number: l.num, name: l.name, method: l.method, price: l.price })),
+          choice: { selection: selectionName, base: { name: this.BASE.name, price: this.BASE.price },
             total, totalText: totalPlus, currency: 'CAD, plus GST',
-            included: ['The funding application, with David'] },
+            included: ['The hire-or-machine answer', 'The funding application, with David'],
+            layers: pickedLayers.map(l => ({ number: l.num, name: l.name })),
+            credit: 'Every dollar comes off any build within 90 days of the review meeting' },
           interviews: checked.map(p => ({ name: p.name, role: p.role, email: p.email.trim() })),
           count: n, coordinator: s.coordinator, walkthrough: 'On a screen', fundingLink: s.funding,
           notes: log,
@@ -2499,7 +2435,7 @@ class Component extends DCLogic {
         if (!res.ok) { this.setState({ submit: 'failed' }); return; }
         const receipt = {
           who: data.nda.name + (data.nda.title ? ', ' + data.nda.title : ''), legal: data.nda.legal,
-          choice: `${selectionName}, ${totalPlus}`,
+          choice: `${selectionName}, ${totalPlus}. Included: the hire-or-machine answer and the funding application, with David. Credited in full to anything we build for you within 90 days of the review meeting.`,
           people: `${interviewsWord}. Links open ${this.fmt(d.open)}.`, signedOn: data.dates.signedOn,
           ref: res.id ? 'GV-' + String(res.id).replace(/[^a-z0-9]/gi, '').slice(0, 8).toUpperCase() : '',
           next: `Joey and David countersign within one business day and email it to ${data.nda.email}, with the first invoice.`

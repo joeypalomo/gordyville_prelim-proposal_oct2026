@@ -17,6 +17,11 @@ const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 
+// The one price for step one (gv-v7.0). The page must send exactly this; the handler never takes a price from the browser.
+const STEP_ONE_PRICE = 18500;
+// What the page shows for the funding application on its own, without step one.
+const FUNDING_ALONE_PRICE = 5250;
+
 // ============================== CONFIG ==============================
 const CONFIG = {
   brand: { name: 'GordeyVille Customs', short: 'GordeyVille', ink: '#040406', body: '#2D2D2D', accent: '#D65E1D', evidence: '#256370', muted: '#57514C', rule: '#C8C8C8', surface: '#F9F9F9', bad: '#B42318' },
@@ -131,7 +136,7 @@ function leftovers(obj, used, prefix = '') {
   return out;
 }
 
-function shell(preheader, eyebrow, headline, lede, body) {
+function shell(preheader, eyebrow, headline, lede, body, version) {
   return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>${esc(headline)}</title></head><body style="margin:0;padding:0;background:${B.surface};">` +
     `<div style="display:none;max-height:0;overflow:hidden;opacity:0;">${esc(preheader)}</div>` +
     `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${B.surface};"><tr><td align="center" style="padding:24px 12px;">` +
@@ -139,7 +144,7 @@ function shell(preheader, eyebrow, headline, lede, body) {
     `<tr><td style="background:${B.ink};padding:22px 32px;"><span style="font:700 22px/1 ${SERIF};color:#FFFFFF;">${esc(B.name)}</span><span style="display:inline-block;width:7px;height:7px;background:${B.accent};margin-left:3px;"></span>` +
     `<div style="font:11px/1.4 ${SANS};letter-spacing:.08em;text-transform:uppercase;color:#BDB6AE;padding-top:8px;">${esc(eyebrow)}</div></td></tr>` +
     `<tr><td style="padding:30px 32px 0;"><h1 style="margin:0;font:700 26px/1.25 ${SERIF};color:${B.ink};">${esc(headline)}</h1>${para(esc(lede), 'color:' + B.muted + ';')}</td></tr>` +
-    body + `<tr><td style="padding:28px 32px 30px;font:12px/1.6 ${SANS};color:#8A837C;">Sent by the GordeyVille proposal page through Resend. The full record is attached as JSON.</td></tr></table></td></tr></table></body></html>`;
+    body + `<tr><td style="padding:28px 32px 30px;font:12px/1.6 ${SANS};color:#8A837C;">Sent by the GordeyVille proposal page through Resend. Page build: ${esc(version || 'not sent')}. The full record is attached as JSON.</td></tr></table></td></tr></table></body></html>`;
 }
 function audit(meta, client) {
   return section('Audit trail', rows([
@@ -154,17 +159,11 @@ function audit(meta, client) {
 // ---------- accept: the signed NDA and step one ----------
 function buildAccept(d, env, meta, ctx) {
   const nda = d.nda || {}, ch = d.choice || {}, dates = d.dates || {};
-  const layers = Array.isArray(ch.layers) ? ch.layers : [];
   const people = Array.isArray(d.interviews) ? d.interviews : [];
   const notes = (Array.isArray(d.notes) ? d.notes : []).filter(n => n && trimAll(n.text));
-  const total = Number(ch.total) || 0;
-  // Step one is paid from gv-v6.0: the total is the base price plus every picked layer. Recompute it here.
-  const base = ch.base && typeof ch.base === 'object' ? ch.base : null;
-  const addons = Array.isArray(ch.addons) ? ch.addons : [];
-  const recomputed = (base ? Number(base.price) || 0 : 0) + layers.reduce((x, l) => x + (Number(l.price) || 0), 0);
-  const totalOk = recomputed === total;
-  const choiceName = ch.selection || ch.preset || (layers.length ? plural(layers.length, 'layer') : 'Step one');
-  const choiceText = total ? `${choiceName} at ${cad(total)} plus GST` : choiceName;
+  // The handler has already refused any accept whose price is not STEP_ONE_PRICE (see priceProblem).
+  const total = STEP_ONE_PRICE;
+  const choiceText = `step one at ${cad(total)} plus GST`;
   const due = nextBusinessDay(meta.receivedAtIso);
   const who = trimAll(nda.name) + (trimAll(nda.title) ? ', ' + trimAll(nda.title) : '');
   const noEmail = people.filter(p => !trimAll(p.email)).map(p => trimAll(p.name) || 'one person');
@@ -174,7 +173,7 @@ function buildAccept(d, env, meta, ctx) {
   const moves = [
     `Countersign the NDA and email it to ${esc(nda.email)} by <strong>${esc(due)}</strong>. Replying to this email reaches ${esc(nda.name)}. The exact PDF they signed against is attached.`
   ];
-  if (total) moves.push(`Send the first invoice with the countersigned NDA: half of ${cad(total)}, so <strong>${cad(total / 2)} plus GST</strong>. The other half is billed at the review meeting.`);
+  moves.push(`Send the first invoice with the countersigned NDA: half of ${cad(total)}, so <strong>${cad(total / 2)} plus GST</strong>. The other half is billed at the review meeting.`);
   moves.push(`Send each interview link on <strong>${esc(dates.linksOpen || 'the date on the page')}</strong> to ${plural(people.length, 'person', 'people')}: ${esc(list(people.map(p => trimAll(p.name))))}.` +
     (noEmail.length ? ` <span style="color:${B.accent};font-weight:bold;">No email given for ${esc(list(noEmail))}.</span> Ask ${esc(d.coordinator || nda.name)}, who coordinates on their side.` : ' Every email is below.'));
   if (notes.length) moves.push(`Answer the ${plural(notes.length, 'note')} they left on the page before you countersign.` + (notes.some(n => n.sent === false || n.draft) ? ' At least one never sent on its own, so this is the first time you see it.' : ''));
@@ -200,17 +199,12 @@ function buildAccept(d, env, meta, ctx) {
   body += section('What they agreed to', quote(d.restatement || '') + para('<strong>Consent, NDA and step one</strong>') + quote((d.consent || {}).ndaAndStepOne || '') +
     ((d.consent || {}).approval || (d.consent || {}).layers ? para('<strong>Consent, the price</strong>') + quote(d.consent.approval || d.consent.layers) : ''));
 
-  const lineRows = [];
-  if (base) lineRows.push([{ t: '' }, { t: `<strong>${esc(base.name || 'Step one')}</strong>`, raw: true }, { t: 'Interviews, ten job dates, written plan, follow-up proposal', color: B.muted }, cad(base.price)]);
-  addons.forEach(a => {
-    const own = layers.filter(l => (a.layers || []).includes(l.id));
-    lineRows.push([a.number || '', { t: `<strong>${esc(a.name || '')}</strong>`, raw: true }, { t: own.map(l => `${l.number} ${l.name}`).join(' · '), color: B.muted }, cad(a.price)]);
-  });
-  if (!addons.length) layers.forEach(l => lineRows.push([l.number || '', l.name || '', l.method || '', cad(l.price)]));
-  lineRows.push([{ t: '' }, { t: '<strong>Total</strong>', raw: true }, { t: ch.currency || 'CAD, plus GST', color: B.muted }, { t: `<strong>${cad(total)}</strong>`, raw: true }]);
-  body += section('Their choice', grid(['', 'Item', 'What it covers', 'Price'], lineRows, { right: [3], nowrap: [3] }) +
-    rows([['Total, checked here', badge(totalOk, totalOk ? 'Matches step one plus the layers picked' : `Does not match: ${cad(recomputed)} recomputed`), true]]) +
-    ((Array.isArray(ch.included) && ch.included.length) ? para('Included at no charge: ' + esc(ch.included.map((x, i) => i ? String(x).charAt(0).toLowerCase() + String(x).slice(1) : x).join('; ')) + '.', 'color:' + B.muted + ';') : ''));
+  body += section('The price', rows([
+    ['Step one', `${cad(total)} plus GST, billed half on the first invoice and half at the review meeting.`],
+    ['Included', 'The interviews and job dates, the written plan, the hire-or-machine answer (drafting capacity and machine payback), the funding application with David at no charge, and the follow-up proposal.'],
+    ['Credit', 'Every dollar comes off any build within 90 days of the review meeting.'],
+    ['Funding alone', `The page priced the funding application alone at ${cad(FUNDING_ALONE_PRICE)} plus GST.`]
+  ]));
 
   body += section('Interviews', grid(['Name', 'Role', 'Email'], people.map(p => [p.name || '', p.role || '', trimAll(p.email) ? p.email : { t: 'Not given', color: B.accent }]), { boldFirst: true }) +
     rows([['Coordinates on their side', d.coordinator], ['Review walkthrough', d.walkthrough]]));
@@ -235,11 +229,11 @@ function buildAccept(d, env, meta, ctx) {
     `${plural(people.length, 'person takes', 'people take')} the interviews; links open ${dates.linksOpen || 'next week'}. ` +
     (notes.length ? `They left ${plural(notes.length, 'note')}. Read ${notes.length === 1 ? 'it' : 'them'} first.` : 'They left no notes.');
   return {
-    subject: `${B.short} signed the NDA: ${who} chose ${choiceText}` + (notes.length ? ` (${plural(notes.length, 'note')})` : ''),
+    subject: `${B.short} signed the NDA: ${trimAll(nda.name) || 'GordeyVille'} chose ${choiceText}` + (notes.length ? ` (${plural(notes.length, 'note')})` : ''),
     eyebrow: 'Signed · step one' + (d.version ? ' · ' + d.version : ''),
     headline: `${trimAll(nda.name) || 'GordeyVille'} signed. Countersign by ${due}.`,
     lede, body, replyTo: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(trimAll(nda.email)) ? trimAll(nda.email) : null,
-    summary: { pdfFingerprintVerified: pdfOk, signatureMatchesName: sigOk, totalVerified: totalOk, countersignBy: due, firstInvoice: total ? total / 2 : 0 },
+    summary: { pdfFingerprintVerified: pdfOk, signatureMatchesName: sigOk, priceFromServer: STEP_ONE_PRICE, countersignBy: due, firstInvoice: total / 2 },
     attachPdf: true
   };
 }
@@ -254,7 +248,7 @@ function buildNote(d, env, meta, ctx) {
   body += audit(meta, { sentAt: env.sentAt, key: ctx.key });
   const first = trimAll(d.text).replace(/\s+/g, ' ');
   return {
-    subject: `${B.short} question, ${about}: ${first.length > 70 ? first.slice(0, 67).replace(/\s+\S*$/, '') + '…' : first}`,
+    subject: (about === 'Step one in smaller pieces' ? `${B.short} asked for smaller pieces: ` : `${B.short} question, ${about}: `) + (first.length > 70 ? first.slice(0, 67).replace(/\s+\S*$/, '') + '…' : first),
     eyebrow: 'Question · from the proposal page',
     headline: `${B.short} has a question. Answer by ${due}.`,
     lede: `Sent from "${about}" on the proposal page. The page promises an answer by email within one business day. The page does not say who sent it; if the NDA is signed, the signer's email is in that record.`,
@@ -334,6 +328,31 @@ const REQUIRED = {
   'job-sheet': d => (Array.isArray(d.rows) ? [] : ['rows'])
 };
 
+// ---------- the price gate (accept only) ----------
+// Returns why an accept payload does not carry the one server price, or '' when it does.
+function priceProblem(d) {
+  const ch = d.choice;
+  if (!ch || typeof ch !== 'object' || Array.isArray(ch)) return 'no choice was sent';
+  const reasons = [];
+  if (!(ch.base && typeof ch.base === 'object' && Number(ch.base.price) === STEP_ONE_PRICE)) reasons.push(`base price ${JSON.stringify(ch.base && ch.base.price)} is not ${STEP_ONE_PRICE}`);
+  if (Number(ch.total) !== STEP_ONE_PRICE) reasons.push(`total ${JSON.stringify(ch.total)} is not ${STEP_ONE_PRICE}`);
+  ['addonIds', 'addons', 'layerIds'].forEach(k => {
+    const v = ch[k] !== undefined ? ch[k] : d[k];
+    if (v !== undefined && v !== null && !(Array.isArray(v) && v.length === 0) && v !== '') reasons.push(`${k} was sent (${JSON.stringify(v).slice(0, 80)})`);
+  });
+  return reasons.join('; ');
+}
+function buildRejection(env, meta, reason, key) {
+  const d = env.data || {}, nda = d.nda || {};
+  const raw = JSON.stringify(env, null, 2);
+  const body = section('Why it was refused', rows([['Reason', reason], ['Server price', `${cad(STEP_ONE_PRICE)} plus GST`], ['Page build', env.version || d.version || 'not sent']])) +
+    section('Who tried to sign', rows([['Name', nda.name], ['Business, legal name', nda.legal], ['Notice email', nda.email]])) +
+    section('The raw payload', `<pre style="margin:12px 0 0;padding:14px 16px;background:${B.surface};font:12px/1.5 Menlo,Consolas,monospace;white-space:pre-wrap;word-break:break-all;color:${B.ink};">${esc(raw.length > 40000 ? raw.slice(0, 40000) + '\n[cut, full payload attached]' : raw)}</pre>`) +
+    audit(meta, { sentAt: env.sentAt, key });
+  const lede = `The page sent a signature whose price is not ${cad(STEP_ONE_PRICE)}. Nothing was recorded as signed and the signer saw the page's "did not send" message. If this was a real signature, contact them.`;
+  return { subject: `${B.short} submission rejected: price mismatch`, html: shell(lede, 'Rejected · price mismatch', 'A signature was refused: the price did not match', lede, body, env.version || d.version), text: lede + '\n\nReason: ' + reason + '\n\n' + raw };
+}
+
 // ---------- send ----------
 async function resend(payload, key) {
   const r = await fetch('https://api.resend.com/emails', {
@@ -370,6 +389,19 @@ module.exports = async function handler(req, res) {
   if (!CONFIG.types.includes(type)) return res.status(400).json({ ok: false, error: 'unknown type' });
   const d = env.data && typeof env.data === 'object' && !Array.isArray(env.data) ? env.data : null;
   if (!d) return res.status(400).json({ ok: false, error: 'missing data' });
+  if (type === 'accept') {
+    const problem = priceProblem(d);
+    if (problem) {
+      const meta = serverMeta(req), key = 'gordyville-reject-' + sha256('reject' + stable(d)).slice(0, 40);
+      const alert = buildRejection(env, meta, problem, key);
+      const att = [{ filename: `gordyville-rejected-payload-${meta.receivedAtIso.slice(0, 10)}.json`, content: Buffer.from(JSON.stringify(Object.assign({}, env, { server: Object.assign({}, meta, { rejected: problem }) }), null, 2)).toString('base64') }];
+      try {
+        const out = await resend({ from: CONFIG.from, to: String(CONFIG.to).split(',').map(x => x.trim()).filter(Boolean), subject: alert.subject, html: alert.html, text: alert.text, attachments: att, tags: [{ name: 'source', value: 'gordyville_proposal' }, { name: 'type', value: 'rejected' }] }, key);
+        console.error('submit: rejected accept,', problem, '| alert', out.status, out.json && (out.json.id || out.json.name));
+      } catch (e) { console.error('submit: rejected accept,', problem, '| alert unreachable', e && e.message); }
+      return res.status(400).json({ ok: false, error: 'price mismatch' });
+    }
+  }
   const missing = REQUIRED[type](d);
   if (missing.length) return res.status(400).json({ ok: false, error: 'missing ' + missing.join(', ') });
 
@@ -388,7 +420,7 @@ module.exports = async function handler(req, res) {
   const text = [mail.headline.toUpperCase(), '', mail.lede, '', 'The full record is in the attached JSON.'].join('\n');
 
   try {
-    const payload = { from: CONFIG.from, to, subject: str(mail.subject, 240), html: shell(mail.lede, mail.eyebrow, mail.headline, mail.lede, mail.body), text, attachments, tags: [{ name: 'source', value: 'gordyville_proposal' }, { name: 'type', value: type.replace(/-/g, '_') }] };
+    const payload = { from: CONFIG.from, to, subject: str(mail.subject, 240), html: shell(mail.lede, mail.eyebrow, mail.headline, mail.lede, mail.body, env.version || d.version), text, attachments, tags: [{ name: 'source', value: 'gordyville_proposal' }, { name: 'type', value: type.replace(/-/g, '_') }] };
     if (mail.replyTo) payload.reply_to = mail.replyTo;
     const out = await resend(payload, key);
     if (out.status >= 200 && out.status < 300 && out.json && out.json.id) { console.log('submit: sent', type, out.json.id); return reply(res, out.json.id, meta); }
