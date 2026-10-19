@@ -158,8 +158,13 @@ function buildAccept(d, env, meta, ctx) {
   const people = Array.isArray(d.interviews) ? d.interviews : [];
   const notes = (Array.isArray(d.notes) ? d.notes : []).filter(n => n && trimAll(n.text));
   const total = Number(ch.total) || 0;
-  const choiceName = ch.preset || (layers.length ? plural(layers.length, 'layer') : 'Bottleneck diagnosis');
-  const choiceText = total ? `${choiceName} at ${cad(total)} plus GST` : `${choiceName}, no charge`;
+  // Step one is paid from gv-v6.0: the total is the base price plus every picked layer. Recompute it here.
+  const base = ch.base && typeof ch.base === 'object' ? ch.base : null;
+  const addons = Array.isArray(ch.addons) ? ch.addons : [];
+  const recomputed = (base ? Number(base.price) || 0 : 0) + layers.reduce((x, l) => x + (Number(l.price) || 0), 0);
+  const totalOk = recomputed === total;
+  const choiceName = ch.selection || ch.preset || (layers.length ? plural(layers.length, 'layer') : 'Step one');
+  const choiceText = total ? `${choiceName} at ${cad(total)} plus GST` : choiceName;
   const due = nextBusinessDay(meta.receivedAtIso);
   const who = trimAll(nda.name) + (trimAll(nda.title) ? ', ' + trimAll(nda.title) : '');
   const noEmail = people.filter(p => !trimAll(p.email)).map(p => trimAll(p.name) || 'one person');
@@ -193,12 +198,19 @@ function buildAccept(d, env, meta, ctx) {
   used.add('nda.pdfSha256'); used.add('nda.pdf');
 
   body += section('What they agreed to', quote(d.restatement || '') + para('<strong>Consent, NDA and step one</strong>') + quote((d.consent || {}).ndaAndStepOne || '') +
-    ((d.consent || {}).layers ? para('<strong>Consent, paid layers</strong>') + quote(d.consent.layers) : ''));
+    ((d.consent || {}).approval || (d.consent || {}).layers ? para('<strong>Consent, the price</strong>') + quote(d.consent.approval || d.consent.layers) : ''));
 
-  body += section('Their choice', (layers.length
-    ? grid(['', 'Layer', 'Method', 'Price'], layers.map(l => [l.number || '', l.name || '', l.method || '', cad(l.price)]).concat([[{ t: '' }, { t: '<strong>Total</strong>', raw: true }, { t: ch.currency || 'CAD, plus GST', color: B.muted }, { t: `<strong>${cad(total)}</strong>`, raw: true }]]), { right: [3], nowrap: [3] })
-    : para(`${esc(choiceName)}. No paid layers.`)) +
-    para('Included at no charge: ' + esc((Array.isArray(ch.included) ? ch.included : []).map((x, i) => i ? String(x).charAt(0).toLowerCase() + String(x).slice(1) : x).join('; ')) + '.', 'color:' + B.muted + ';'));
+  const lineRows = [];
+  if (base) lineRows.push([{ t: '' }, { t: `<strong>${esc(base.name || 'Step one')}</strong>`, raw: true }, { t: 'Interviews, ten job dates, written plan, follow-up proposal', color: B.muted }, cad(base.price)]);
+  addons.forEach(a => {
+    const own = layers.filter(l => (a.layers || []).includes(l.id));
+    lineRows.push([a.number || '', { t: `<strong>${esc(a.name || '')}</strong>`, raw: true }, { t: own.map(l => `${l.number} ${l.name}`).join(' · '), color: B.muted }, cad(a.price)]);
+  });
+  if (!addons.length) layers.forEach(l => lineRows.push([l.number || '', l.name || '', l.method || '', cad(l.price)]));
+  lineRows.push([{ t: '' }, { t: '<strong>Total</strong>', raw: true }, { t: ch.currency || 'CAD, plus GST', color: B.muted }, { t: `<strong>${cad(total)}</strong>`, raw: true }]);
+  body += section('Their choice', grid(['', 'Item', 'What it covers', 'Price'], lineRows, { right: [3], nowrap: [3] }) +
+    rows([['Total, checked here', badge(totalOk, totalOk ? 'Matches step one plus the layers picked' : `Does not match: ${cad(recomputed)} recomputed`), true]]) +
+    ((Array.isArray(ch.included) && ch.included.length) ? para('Included at no charge: ' + esc(ch.included.map((x, i) => i ? String(x).charAt(0).toLowerCase() + String(x).slice(1) : x).join('; ')) + '.', 'color:' + B.muted + ';') : ''));
 
   body += section('Interviews', grid(['Name', 'Role', 'Email'], people.map(p => [p.name || '', p.role || '', trimAll(p.email) ? p.email : { t: 'Not given', color: B.accent }]), { boldFirst: true }) +
     rows([['Coordinates on their side', d.coordinator], ['Review walkthrough', d.walkthrough]]));
@@ -227,7 +239,7 @@ function buildAccept(d, env, meta, ctx) {
     eyebrow: 'Signed · step one' + (d.version ? ' · ' + d.version : ''),
     headline: `${trimAll(nda.name) || 'GordeyVille'} signed. Countersign by ${due}.`,
     lede, body, replyTo: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(trimAll(nda.email)) ? trimAll(nda.email) : null,
-    summary: { pdfFingerprintVerified: pdfOk, signatureMatchesName: sigOk, countersignBy: due, firstInvoice: total ? total / 2 : 0 },
+    summary: { pdfFingerprintVerified: pdfOk, signatureMatchesName: sigOk, totalVerified: totalOk, countersignBy: due, firstInvoice: total ? total / 2 : 0 },
     attachPdf: true
   };
 }
