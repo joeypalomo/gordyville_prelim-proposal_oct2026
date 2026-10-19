@@ -97,7 +97,7 @@ function grid(head, body, opts = {}) {
   const th = head.map((h, i) => `<th align="${(opts.right || []).includes(i) ? 'right' : 'left'}" style="padding:8px 10px 8px 0;border-bottom:1px solid ${B.ink};font:700 11px/1.4 ${SANS};letter-spacing:.06em;text-transform:uppercase;color:${B.muted};white-space:nowrap;">${esc(h)}</th>`).join('');
   const tr = body.map(r => '<tr>' + r.map((c, i) => {
     const cell = c && typeof c === 'object' ? c : { t: c };
-    return `<td valign="top" align="${(opts.right || []).includes(i) ? 'right' : 'left'}" style="padding:9px 10px 9px 0;${td}font:14px/1.45 ${i === 0 && opts.boldFirst ? 'bold ' : ''}${SERIF};color:${cell.color || B.ink};${(opts.nowrap || []).includes(i) ? 'white-space:nowrap;' : ''}">${cell.raw ? cell.t : esc(cell.t == null || cell.t === '' ? '' : cell.t)}</td>`;
+    return `<td valign="top" align="${(opts.right || []).includes(i) ? 'right' : 'left'}" style="padding:9px 10px 9px 0;${td}font:${i === 0 && opts.boldFirst ? 'bold ' : ''}14px/1.45 ${SERIF};color:${cell.color || B.ink};${(opts.nowrap || []).includes(i) ? 'white-space:nowrap;' : ''}">${cell.raw ? cell.t : esc(cell.t == null || cell.t === '' ? '' : cell.t)}</td>`;
   }).join('') + '</tr>').join('');
   return `<div style="overflow-x:auto;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin-top:6px;">${'<tr>' + th + '</tr>' + tr}</table></div>`;
 }
