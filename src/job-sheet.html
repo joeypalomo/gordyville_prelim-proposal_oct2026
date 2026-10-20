@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Where the work waits. For Randy Gordey.</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600&amp;text=0123456789&amp;display=swap">
+<style>
+body { margin: 0; background: #FFFFFF; font-family: "DM Sans", sans-serif; color: #2D2D2D; -webkit-font-smoothing: antialiased; }
+* { box-sizing: border-box; }
+::selection { background: #256370; color: #FFFFFF; }
+a { color: #040406; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+a:hover { color: #040406; text-decoration-color: #040406 !important; }
+:focus-visible { outline: 2px solid #040406; outline-offset: 2px; }
+p { margin: 0; }
+input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0.55; cursor: pointer; }
+@media print {
+  @page { size: letter landscape; margin: 0.4in; }
+  body[data-printing="sheet"] main, body[data-printing="sheet"] header[data-headbar], body[data-printing="sheet"] footer { display: none !important; }
+  body[data-printing="sheet"] [data-sheet-overlay] { display: block !important; position: static !important; overflow: visible !important; }
+  [data-sheet-noprint] { display: none !important; }
+  [data-sheet-bar] { position: static !important; }
+}
+</style>
+<style id="ectx-finish">
+:root { --ectx-font-mono: "DM Sans", sans-serif !important; --font-mono: "DM Sans", sans-serif !important; }
+h1, h2, h3, h4, h5, h6, [style*="Playfair"], [style*="font-display"], [class*="display"], [class*="serif"], [class*="title"] { font-variant-numeric: lining-nums !important; }
+code, pre, kbd, samp, tt, [style*="Mono"], [style*="mono"], [class*="mono"] { font-family: "DM Sans", sans-serif !important; }
+button, input, select, textarea { font: inherit; color: inherit; }
+a { color: #040406; text-decoration-color: #C8C8C8; }
+</style>
+</helmet>
+
+<div ref="{{ rootRef }}" style="background:#FFFFFF;min-height:100vh;font-family:'DM Sans',sans-serif;color:#2D2D2D;">
+
+  <div data-sheet-bar="" style="position:sticky;top:0;z-index:5;background:#FFFFFF;border-bottom:1px solid #040406;">
+    <div style="max-width:1360px;margin:0 auto;padding:10px clamp(16px,3vw,32px);display:flex;align-items:center;gap:10px 24px;flex-wrap:wrap;min-height:60px;">
+      <span style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:#040406;"><span aria-hidden="true" style="width:7px;height:7px;background:#256370;flex:none;"></span>Your dates only. Rough is fine.</span>
+      <span style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:#040406;"><span aria-hidden="true" style="width:7px;height:7px;background:#256370;flex:none;"></span>Runs on this page. Nothing is sent until you press Send.</span>
+      <sc-if value="{{ inOverlay }}" hint-placeholder-val="{{ true }}">
+        <button type="button" data-sheet-noprint="" onClick="{{ close }}" style="margin-left:auto;height:44px;padding:0 18px;background:#FFFFFF;border:1px solid #040406;border-radius:0;font-size:14px;font-weight:600;color:#040406;cursor:pointer;" style-hover="background:#040406;color:#FFFFFF;">Back to the page</button>
+      </sc-if>
+    </div>
+  </div>
+
+  <main style="max-width:1360px;margin:0 auto;padding:clamp(20px,3vw,40px) clamp(16px,3vw,32px) 48px;">
+    <div style="border:1px solid #040406;padding:clamp(20px,3.4vw,48px);display:flex;flex-direction:column;gap:40px;">
+
+      <div style="display:flex;flex-direction:column;gap:22px;max-width:760px;">
+        <div style="display:flex;flex-wrap:wrap;gap:6px 18px;font-size:11px;font-weight:600;letter-spacing:0.08em;color:#256370;"><span>FOR RANDY GORDEY.</span><span>GORDEYVILLE CUSTOMS.</span><span>BUILT FROM YOUR OWN WORDS.</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:#57514C;">EXHIBIT 1</span>
+          <h1 style="margin:0;font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(38px,5.4vw,64px);line-height:1.04;letter-spacing:-0.02em;color:#040406;">Where the work waits.</h1>
+        </div>
+        <p style="font-size:17px;line-height:1.65;text-wrap:pretty;">Randy, on October 9 you told us three things. You’re turning work down every day. Cutting and material are a bottleneck. And Jesse is one guy drawing every build. This sheet puts your own dates on it. Fill in ten recent jobs and it shows which step took longest between your dates. It runs on this page and sends nothing until you press Send. It is not a diagnosis. Your dates and the interviews decide that together.</p>
+        <ul style="list-style:none;margin:0;padding:0;border-top:1px solid #C8C8C8;">
+          <li style="padding:11px 0;border-bottom:1px solid #C8C8C8;font-size:15px;color:#040406;">Use a job number or a nickname. No customer names needed.</li>
+          <li style="padding:11px 0;border-bottom:1px solid #C8C8C8;font-size:15px;color:#040406;">Leave a date blank if you don’t know it. The sheet uses what you give it.</li>
+          <li style="padding:11px 0;border-bottom:1px solid #C8C8C8;font-size:15px;color:#040406;">Ten jobs is best. Three is enough to start.</li>
+        </ul>
+        <p style="margin-top:-12px;font-size:14px;line-height:1.55;color:#57514C;">Rather do it together? Joey or David can fill it in with you or Robin on a 30-minute call.</p>
+      </div>
+
+      <!-- The picture -->
+      <section aria-label="The finding" style="display:flex;flex-direction:column;gap:16px;border-top:2px solid #040406;padding-top:22px;">
+        <p aria-live="polite" style="font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(22px,2.6vw,30px);line-height:1.25;color:#040406;max-width:34em;text-wrap:pretty;">{{ finding }}</p>
+        <sc-if value="{{ hasBar }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:6px;max-width:880px;">
+            <div style="display:flex;flex-direction:column;border-top:1px solid #C8C8C8;">
+              <sc-for list="{{ bar }}" as="b" hint-placeholder-count="4">
+                <div style="display:grid;grid-template-columns:clamp(84px,14vw,120px) minmax(0,1fr) auto;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #C8C8C8;">
+                  <span style="font-size:13px;font-weight:600;color:#040406;">{{ b.name }}</span>
+                  <span style="height:22px;display:block;min-width:0;"><sc-if value="{{ b.ok }}" hint-placeholder-val="{{ true }}"><span style="display:block;height:22px;width:{{ b.pct }};background:{{ b.color }};"></span></sc-if></span>
+                  <span style="font-family:'Hanken Grotesk','DM Sans',sans-serif;font-size:13px;font-weight:600;color:#040406;text-align:right;white-space:nowrap;">{{ b.meta }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <p style="font-size:13px;line-height:1.55;color:#57514C;text-wrap:pretty;">Days on the middle job for each step. Each step counts only the jobs with both of its dates, so the steps don't add up to one job.</p>
+          </div>
+        </sc-if>
+        <p style="font-size:14px;color:#57514C;">Your goal on October 9: kits ready two weeks to a month ahead.</p>
+      </section>
+
+      <div data-sheet-noprint="" style="display:flex;flex-wrap:wrap;gap:10px;">
+        <button type="button" onClick="{{ showExample }}" style="height:46px;padding:0 18px;background:#FFFFFF;border:1px solid #040406;border-radius:0;font-size:15px;font-weight:600;color:#040406;cursor:pointer;" style-hover="background:#040406;color:#FFFFFF;">{{ exampleLabel }}</button>
+        <button type="button" onClick="{{ askReset }}" style="height:46px;padding:0 18px;background:#FFFFFF;border:1px solid #040406;border-radius:0;font-size:15px;font-weight:600;color:#040406;cursor:pointer;" style-hover="background:#040406;color:#FFFFFF;">Reset</button>
+        <button type="button" onClick="{{ doPrint }}" style="height:46px;padding:0 18px;background:#FFFFFF;border:1px solid #040406;border-radius:0;font-size:15px;font-weight:600;color:#040406;cursor:pointer;" style-hover="background:#040406;color:#FFFFFF;">Print</button>
+      </div>
+      <sc-if value="{{ confirmReset }}" hint-placeholder-val="{{ false }}">
+        <div role="alertdialog" aria-label="Clear the sheet?" style="margin-top:-24px;border:1px solid #040406;padding:16px 18px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;box-shadow:0 10px 28px rgba(4,4,6,0.12);">
+          <span style="font-size:15px;color:#040406;font-weight:500;margin-right:auto;">Clear every row on this sheet?</span>
+          <button type="button" onClick="{{ doReset }}" style="height:44px;padding:0 16px;background:#040406;border:1px solid #040406;border-radius:0;font-size:14px;font-weight:600;color:#FFFFFF;cursor:pointer;">Clear the sheet</button>
+          <button type="button" onClick="{{ cancelReset }}" style="height:44px;padding:0 16px;background:#FFFFFF;border:1px solid #040406;border-radius:0;font-size:14px;font-weight:600;color:#040406;cursor:pointer;">Keep my dates</button>
+        </div>
+      </sc-if>
+
+      <!-- Job board, wide -->
+      <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+        <div style="overflow-x:auto;margin:0 -4px;padding:0 4px;">
+          <table style="width:100%;min-width:1180px;border-collapse:collapse;font-size:14px;">
+            <thead>
+              <tr>
+                <th colspan="7" style="text-align:left;padding:0 0 8px;font-size:11px;font-weight:600;letter-spacing:0.08em;color:#256370;">YOUR DATES</th>
+                <th colspan="5" style="text-align:right;padding:0 0 8px;font-size:11px;font-weight:600;letter-spacing:0.08em;color:#256370;border-left:1px solid #C8C8C8;">DAYS</th>
+              </tr>
+              <tr style="border-top:1px solid #040406;border-bottom:1px solid #040406;">
+                <th style="text-align:left;padding:10px 8px 10px 0;font-weight:600;color:#040406;width:120px;">Job</th>
+                <th style="text-align:left;padding:10px 8px;font-weight:600;color:#040406;width:140px;">Line</th>
+                <th style="text-align:left;padding:10px 6px;font-weight:600;color:#040406;">Customer said yes</th>
+                <th style="text-align:left;padding:10px 6px;font-weight:600;color:#040406;">Drawing done</th>
+                <th style="text-align:left;padding:10px 6px;font-weight:600;color:#040406;">Cut parts back</th>
+                <th style="text-align:left;padding:10px 6px;font-weight:600;color:#040406;">Welding started</th>
+                <th style="text-align:left;padding:10px 6px;font-weight:600;color:#040406;">Out the door</th>
+                <th style="text-align:right;padding:10px 6px;font-weight:600;color:#040406;border-left:1px solid #C8C8C8;width:66px;">Drawing</th>
+                <th style="text-align:right;padding:10px 6px;font-weight:600;color:#040406;width:66px;">Cutting</th>
+                <th style="text-align:right;padding:10px 6px;font-weight:600;color:#040406;width:66px;">Staging</th>
+                <th style="text-align:right;padding:10px 6px;font-weight:600;color:#040406;width:72px;">On the floor</th>
+                <th style="text-align:right;padding:10px 0 10px 6px;font-weight:600;color:#040406;width:60px;">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <sc-for list="{{ rows }}" as="r" hint-placeholder-count="10">
+                <tr onFocus="{{ r.focus }}" style="border-bottom:1px solid {{ r.rule }};background:{{ r.bg }};">
+                  <td style="padding:6px 8px 6px 0;vertical-align:top;">
+                    <input type="text" value="{{ r.job }}" onChange="{{ r.set.job }}" disabled="{{ r.example }}" aria-label="{{ r.jobLabel }}" placeholder="{{ r.jobPh }}" style="width:100%;height:40px;border:1px solid #C8C8C8;border-radius:0;padding:0 10px;background:#FFFFFF;font-size:14px;">
+                    <sc-if value="{{ r.example }}" hint-placeholder-val="{{ false }}"><span style="display:block;margin-top:4px;font-size:11px;color:#57514C;">Example. Made-up dates.</span></sc-if>
+                    <sc-if value="{{ r.warn }}" hint-placeholder-val="{{ false }}"><span role="alert" style="display:block;margin-top:4px;font-size:12px;font-weight:600;color:#040406;max-width:220px;">Check these dates. A later step is before an earlier one.</span></sc-if>
+                  </td>
+                  <td style="padding:6px 8px;vertical-align:top;">
+                    <select value="{{ r.line }}" onChange="{{ r.set.line }}" disabled="{{ r.example }}" aria-label="Line" style="width:100%;height:40px;border:1px solid #C8C8C8;border-radius:0;padding:0 8px;background:#FFFFFF;font-size:14px;">
+                      <option value="">Pick a line</option>
+                      <sc-for list="{{ lines }}" as="l" hint-placeholder-count="7"><option value="{{ l }}">{{ l }}</option></sc-for>
+                    </select>
+                  </td>
+                  <td style="padding:6px;vertical-align:top;"><input type="date" value="{{ r.yes }}" onChange="{{ r.set.yes }}" disabled="{{ r.example }}" aria-label="Customer said yes" style="width:100%;height:40px;border:1px solid #C8C8C8;border-radius:0;padding:0 8px;background:#FFFFFF;font-size:14px;"></td>
+                  <td style="padding:6px;vertical-align:top;"><input type="date" value="{{ r.drawn }}" onChange="{{ r.set.drawn }}" disabled="{{ r.example }}" aria-label="Drawing done" style="width:100%;height:40px;border:1px solid #C8C8C8;border-radius:0;padding:0 8px;background:#FFFFFF;font-size:14px;"></td>
+                  <td style="padding:6px;vertical-align:top;"><input type="date" value="{{ r.cut }}" onChange="{{ r.set.cut }}" disabled="{{ r.example }}" aria-label="Cut parts back" style="width:100%;height:40px;border:1px solid #C8C8C8;border-radius:0;padding:0 8px;background:#FFFFFF;font-size:14px;"></td>
+                  <td style="padding:6px;vertical-align:top;"><input type="date" value="{{ r.weld }}" onChange="{{ r.set.weld }}" disabled="{{ r.example }}" aria-label="Welding started" style="width:100%;height:40px;border:1px solid #C8C8C8;border-radius:0;padding:0 8px;background:#FFFFFF;font-size:14px;"></td>
+                  <td style="padding:6px;vertical-align:top;"><input type="date" value="{{ r.out }}" onChange="{{ r.set.out }}" disabled="{{ r.example }}" aria-label="Out the door" style="width:100%;height:40px;border:1px solid #C8C8C8;border-radius:0;padding:0 8px;background:#FFFFFF;font-size:14px;"></td>
+                  <td style="padding:16px 6px 6px;vertical-align:top;text-align:right;border-left:1px solid #C8C8C8;font-family:'Hanken Grotesk','DM Sans',sans-serif;font-size:15px;font-weight:600;color:{{ r.c.drawing.color }};">{{ r.c.drawing.text }}</td>
+                  <td style="padding:16px 6px 6px;vertical-align:top;text-align:right;font-family:'Hanken Grotesk','DM Sans',sans-serif;font-size:15px;font-weight:600;color:{{ r.c.cutting.color }};">{{ r.c.cutting.text }}</td>
+                  <td style="padding:16px 6px 6px;vertical-align:top;text-align:right;font-family:'Hanken Grotesk','DM Sans',sans-serif;font-size:15px;font-weight:600;color:{{ r.c.staging.color }};">{{ r.c.staging.text }}</td>
+                  <td style="padding:16px 6px 6px;vertical-align:top;text-align:right;font-family:'Hanken Grotesk','DM Sans',sans-serif;font-size:15px;font-weight:600;color:{{ r.c.floor.color }};">{{ r.c.floor.text }}</td>
+                  <td style="padding:16px 0 6px 6px;vertical-align:top;text-align:right;font-family:'Hanken Grotesk','DM Sans',sans-serif;font-size:15px;font-weight:600;color:{{ r.c.total.color }};">{{ r.c.total.text }}</td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </sc-if>
+
+      <!-- Job board, phone -->
+      <sc-if value="{{ narrow }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;border-top:1px solid #040406;">
+          <sc-for list="{{ rows }}" as="r" hint-placeholder-count="3">
+            <div onFocus="{{ r.focus }}" style="padding:18px 0;border-bottom:1px solid #C8C8C8;background:{{ r.bg }};display:flex;flex-direction:column;gap:12px;">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:#256370;">{{ r.cardLabel }}</span><sc-if value="{{ r.example }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;color:#57514C;">Example. Made-up dates.</span></sc-if></div>
+              <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;">
+                <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:#040406;">Job<input type="text" value="{{ r.job }}" onChange="{{ r.set.job }}" disabled="{{ r.example }}" placeholder="{{ r.jobPh }}" style="height:46px;border:1px solid #C8C8C8;border-radius:0;padding:0 10px;background:#FFFFFF;font-size:16px;font-weight:400;min-width:0;"></label>
+                <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:#040406;">Line<select value="{{ r.line }}" onChange="{{ r.set.line }}" disabled="{{ r.example }}" style="height:46px;border:1px solid #C8C8C8;border-radius:0;padding:0 8px;background:#FFFFFF;font-size:16px;font-weight:400;min-width:0;"><option value="">Pick a line</option><sc-for list="{{ lines }}" as="l" hint-placeholder-count="7"><option value="{{ l }}">{{ l }}</option></sc-for></select></label>
+              </div>
+              <label style="display:grid;grid-template-columns:132px minmax(0,1fr);align-items:center;gap:10px;font-size:14px;color:#040406;">Customer said yes<input type="date" value="{{ r.yes }}" onChange="{{ r.set.yes }}" disabled="{{ r.example }}" style="height:46px;border:1px solid #C8C8C8;border-radius:0;padding:0 10px;background:#FFFFFF;font-size:16px;min-width:0;"></label>
+              <label style="display:grid;grid-template-columns:132px minmax(0,1fr);align-items:center;gap:10px;font-size:14px;color:#040406;">Drawing done<input type="date" value="{{ r.drawn }}" onChange="{{ r.set.drawn }}" disabled="{{ r.example }}" style="height:46px;border:1px solid #C8C8C8;border-radius:0;padding:0 10px;background:#FFFFFF;font-size:16px;min-width:0;"></label>
+              <label style="display:grid;grid-template-columns:132px minmax(0,1fr);align-items:center;gap:10px;font-size:14px;color:#040406;">Cut parts back<input type="date" value="{{ r.cut }}" onChange="{{ r.set.cut }}" disabled="{{ r.example }}" style="height:46px;border:1px solid #C8C8C8;border-radius:0;padding:0 10px;background:#FFFFFF;font-size:16px;min-width:0;"></label>
+              <label style="display:grid;grid-template-columns:132px minmax(0,1fr);align-items:center;gap:10px;font-size:14px;color:#040406;">Welding started<input type="date" value="{{ r.weld }}" onChange="{{ r.set.weld }}" disabled="{{ r.example }}" style="height:46px;border:1px solid #C8C8C8;border-radius:0;padding:0 10px;background:#FFFFFF;font-size:16px;min-width:0;"></label>
+              <label style="display:grid;grid-template-columns:132px minmax(0,1fr);align-items:center;gap:10px;font-size:14px;color:#040406;">Out the door<input type="date" value="{{ r.out }}" onChange="{{ r.set.out }}" disabled="{{ r.example }}" style="height:46px;border:1px solid #C8C8C8;border-radius:0;padding:0 10px;background:#FFFFFF;font-size:16px;min-width:0;"></label>
+              <sc-if value="{{ r.warn }}" hint-placeholder-val="{{ false }}"><p role="alert" style="font-size:14px;font-weight:600;color:#040406;">Check these dates. A later step is before an earlier one.</p></sc-if>
+              <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid #C8C8C8;">
+                <div style="padding:10px 6px 0 0;display:flex;flex-direction:column;gap:2px;"><span style="font-size:11px;color:#57514C;">Drawing</span><span style="font-family:'Hanken Grotesk','DM Sans',sans-serif;font-size:16px;font-weight:600;color:{{ r.c.drawing.color }};">{{ r.c.drawing.text }}</span></div>
+                <div style="padding:10px 6px 0;display:flex;flex-direction:column;gap:2px;"><span style="font-size:11px;color:#57514C;">Cutting</span><span style="font-family:'Hanken Grotesk','DM Sans',sans-serif;font-size:16px;font-weight:600;color:{{ r.c.cutting.color }};">{{ r.c.cutting.text }}</span></div>
+                <div style="padding:10px 6px 0;display:flex;flex-direction:column;gap:2px;"><span style="font-size:11px;color:#57514C;">Staging</span><span style="font-family:'Hanken Grotesk','DM Sans',sans-serif;font-size:16px;font-weight:600;color:{{ r.c.staging.color }};">{{ r.c.staging.text }}</span></div>
+                <div style="padding:10px 0 0 6px;display:flex;flex-direction:column;gap:2px;"><span style="font-size:11px;color:#57514C;">On the floor</span><span style="font-family:'Hanken Grotesk','DM Sans',sans-serif;font-size:16px;font-weight:600;color:{{ r.c.floor.color }};">{{ r.c.floor.text }}</span></div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+      <p style="margin-top:-24px;font-size:13px;color:#57514C;">Source: your own job records, typed on this page. Calendar days between the dates you enter.</p>
+
+      <!-- Panel and question -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:32px 48px;align-items:start;">
+        <div style="border-top:1px solid #040406;padding-top:18px;display:flex;flex-direction:column;gap:12px;">
+          <h2 style="margin:0;font-family:'Playfair Display',serif;font-weight:600;font-size:22px;line-height:1.25;color:#040406;">What it would take to know this for real.</h2>
+          <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;font-size:15px;line-height:1.55;">
+            <li style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #C8C8C8;"><span aria-hidden="true" style="width:6px;height:6px;background:#256370;flex:none;margin-top:9px;"></span>The interviews hear each wait from both sides: the person waiting and the person being waited on.</li>
+            <li style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #C8C8C8;"><span aria-hidden="true" style="width:6px;height:6px;background:#256370;flex:none;margin-top:9px;"></span>Anything about drawings goes to Dave before anyone acts on it.</li>
+            <li style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #C8C8C8;"><span aria-hidden="true" style="width:6px;height:6px;background:#256370;flex:none;margin-top:9px;"></span>Where your dates and the interviews disagree, we check both with you before deciding.</li>
+            <li style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #C8C8C8;"><span aria-hidden="true" style="width:6px;height:6px;background:#256370;flex:none;margin-top:9px;"></span>Whether anything gets built is decided by the plan, not by this sheet.</li>
+          </ul>
+        </div>
+        <div style="border-top:1px solid #040406;padding-top:18px;display:flex;flex-direction:column;gap:12px;">
+          <label for="gvc-q" style="font-family:'Playfair Display',serif;font-weight:600;font-size:22px;line-height:1.25;color:#040406;">Which job from the last month sat the longest, and what was it waiting on?</label>
+          <textarea id="gvc-q" value="{{ note }}" onChange="{{ setNote }}" rows="4" style="border:1px solid #C8C8C8;border-radius:0;padding:12px 14px;font-size:16px;line-height:1.55;background:#FFFFFF;resize:vertical;min-height:112px;"></textarea>
+          <div data-sheet-noprint="" style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+            <button type="button" onClick="{{ send }}" disabled="{{ sendDisabled }}" style="align-self:flex-start;height:52px;padding:0 26px;background:{{ sendBg }};color:{{ sendFg }};border:1px solid {{ sendBorder }};border-radius:0;font-size:16px;font-weight:600;cursor:pointer;">{{ sendLabel }}</button>
+            <p aria-live="polite" style="font-size:14px;line-height:1.5;color:{{ sendNoteColor }};">{{ sendNote }}</p>
+          </div>
+          <p style="font-size:13px;color:#57514C;">Your entries stay in this browser until you press Reset.</p>
+        </div>
+      </div>
+
+      <!-- Title block -->
+      <div style="display:flex;justify-content:flex-end;">
+        <div style="display:grid;grid-template-columns:auto minmax(0,1fr);border:1px solid #040406;width:min(100%,520px);">
+          <figure style="margin:0;padding:10px;border-right:1px solid #040406;display:flex;flex-direction:column;gap:6px;">
+            <img src="assets/GVC_shop_picker_deck_under_hoist.jpg" alt="A picker deck truck under the hoist in the shop." style="width:110px;height:110px;object-fit:cover;display:block;">
+            <figcaption style="font-size:11px;color:#57514C;">From your website.</figcaption>
+          </figure>
+          <dl style="margin:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);">
+            <div style="padding:10px 12px;border-bottom:1px solid #040406;border-right:1px solid #040406;"><dt style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:#256370;">DRAWN FOR</dt><dd style="margin:4px 0 0;font-size:14px;color:#040406;">Randy Gordey</dd></div>
+            <div style="padding:10px 12px;border-bottom:1px solid #040406;"><dt style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:#256370;">SHEET</dt><dd style="margin:4px 0 0;font-size:14px;color:#040406;">1 of 1</dd></div>
+            <div style="padding:10px 12px;border-right:1px solid #040406;"><dt style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:#256370;">DATE</dt><dd style="margin:4px 0 0;font-size:14px;color:#040406;">{{ preparedOn }}</dd></div>
+            <div style="padding:10px 12px;"><dt style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:#256370;">CHECKED BY</dt><dd style="margin:4px 0 0;font-size:14px;color:#040406;">you</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:18px;font-size:13px;line-height:1.55;color:#57514C;">Runs on this page. Nothing is sent until you press Send. Prepared {{ preparedOn }}, for Randy Gordey, GordeyVille Customs.</p>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;ndaSigned&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;preparedOn&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;October 16, 2026&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;submitEndpoint&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;/api/submit&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;inOverlay&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onClose&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+class Component extends DCLogic {
+  KEY = 'gvc-for-randy-sheet-v1';
+  blank = () => Array.from({ length: 10 }, () => ({ job: '', line: '', yes: '', drawn: '', cut: '', weld: '', out: '', example: false }));
+  state = { rows: this.load() || this.blank(), note: '', focus: -1, confirmReset: false, send: 'idle', w: 1200 };
+  rootRef = React.createRef();
+
+  emptyRow = () => ({ job: '', line: '', yes: '', drawn: '', cut: '', weld: '', out: '', example: false });
+  load() { try { const v = JSON.parse(localStorage.getItem(this.KEY)); if (v && Array.isArray(v.rows) && v.rows.length === 10) { this._note = v.note || ''; return v.rows.map(r => r && !r.example ? r : this.emptyRow()); } } catch (e) {} return null; }
+  save(rows, note) { try { localStorage.setItem(this.KEY, JSON.stringify({ rows: rows.map(r => r.example ? this.emptyRow() : r), note })); } catch (e) {} }
+  componentDidMount() {
+    if (this._note) this.setState({ note: this._note });
+    const el = this.rootRef.current;
+    if (el && window.ResizeObserver) { this.ro = new ResizeObserver(([e]) => this.setState({ w: e.contentRect.width })); this.ro.observe(el); }
+    this.after = () => { delete document.body.dataset.printing; };
+    window.addEventListener('afterprint', this.after);
+  }
+  componentWillUnmount() { if (this.ro) this.ro.disconnect(); window.removeEventListener('afterprint', this.after); }
+
+  setRows(rows) { this.setState({ rows }); this.save(rows, this.state.note); }
+  days(a, b) { if (!a || !b) return null; const d = (Date.parse(b) - Date.parse(a)) / 86400000; return isNaN(d) ? null : Math.round(d); }
+  median(v) { if (!v.length) return null; const s = [...v].sort((a, b) => a - b), m = s.length >> 1; const x = s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; return Math.floor(x + 0.5); }
+  outOfOrder(r) { const seq = [r.yes, r.drawn, r.cut, r.weld, r.out].filter(Boolean).map(Date.parse); for (let i = 1; i < seq.length; i++) if (seq[i] < seq[i - 1]) return true; return false; }
+
+  analyze(rows) {
+    const names = { drawing: 'getting the drawing done', cutting: 'getting cut parts back', staging: 'staging for the floor', floor: 'the floor, from welding to out the door' };
+    const calc = rows.map(r => ({
+      warn: this.outOfOrder(r),
+      drawing: this.days(r.yes, r.drawn), cutting: this.days(r.drawn, r.cut), staging: this.days(r.cut, r.weld),
+      floor: this.days(r.weld, r.out), total: this.days(r.yes, r.out)
+    }));
+    const keys = ['drawing', 'cutting', 'staging', 'floor'];
+    const med = {}, cnt = {};
+    keys.forEach(k => { const v = calc.filter(c => !c.warn && c[k] !== null).map(c => c[k]); med[k] = this.median(v); cnt[k] = v.length; });
+    const missing = keys.filter(k => cnt[k] < 3);
+    const cap = t => t.charAt(0).toUpperCase() + t.slice(1);
+    let finding, named = [];
+    if (missing.length) {
+      const list = missing.map(k => names[k]);
+      finding = 'Add dates to see ' + (list.length === 1 ? list[0] : list.slice(0, -1).join(', ') + ' and ' + list[list.length - 1]) + '.';
+    } else {
+      const ranked = [...keys].sort((a, b) => med[b] - med[a]);
+      const a = ranked[0], b = ranked[1];
+      if (med[a] - med[b] <= 2) {
+        named = [a, b];
+        finding = `${cap(names[a])} and ${names[b]} are close: ${med[a]} and ${med[b]} days on the middle job. Dates alone can't separate them. The jobs behind them will.`;
+      } else {
+        named = [a];
+        finding = `On the ${cnt[a]} jobs with both dates, the longest step is ${names[a]}: about ${med[a]} days on the middle job. That time includes work and waiting. The interviews tell us which.`;
+      }
+    }
+    return { calc, keys, med, cnt, finding, named };
+  }
+
+  renderVals() {
+    const s = this.state, signed = !!this.props.ndaSigned;
+    const { calc, keys, med, cnt, finding, named } = this.analyze(s.rows);
+    const label = { drawing: 'Drawing', cutting: 'Cutting', staging: 'Staging', floor: 'On the floor' };
+    const ready = keys.filter(k => cnt[k] >= 3);
+    const maxMed = Math.max(1, ...ready.map(k => med[k]));
+    const bar = ready.length ? keys.map(k => {
+      const ok = cnt[k] >= 3;
+      return { name: label[k], ok, none: !ok, pct: ok ? Math.max(med[k] / maxMed * 100, med[k] > 0 ? 1.5 : 0) + '%' : '0%', meta: ok ? `${med[k]} ${med[k] === 1 ? 'day' : 'days'} · ${cnt[k]} jobs` : 'add dates', color: named.includes(k) ? '#256370' : '#C8C8C8' };
+    }) : [];
+    const hasExample = s.rows.some(r => r.example);
+
+    const mk = (i, f) => e => {
+      if (s.rows[i].example) return;
+      const v = e.target.value;
+      const rows = s.rows.map((r, j) => j === i ? { ...r, [f]: v } : r);
+      this.setRows(rows);
+    };
+    const cell = (v, k, i) => ({ text: v === null ? 'add dates' : String(v), color: v === null ? '#57514C' : (named.includes(k) && !calc[i].warn ? '#256370' : '#040406') });
+    const ex = [
+      ['Example A', 'Deck truck', '2026-08-04', '2026-08-16', '2026-08-27', '2026-09-01', '2026-09-11'],
+      ['Example B', 'Picker truck', '2026-08-11', '2026-08-25', '2026-09-03', '2026-09-07', '2026-09-21'],
+      ['Example C', 'Deck truck', '2026-08-18', '2026-08-28', '2026-09-11', '2026-09-15', '2026-09-24']
+    ];
+    const sendDisabled = !signed || s.send === 'saving' || s.send === 'sent';
+    const wide = s.w >= 900;
+
+    return {
+      preparedOn: this.props.preparedOn ?? 'October 16, 2026',
+      rootRef: this.rootRef,
+      inOverlay: !!this.props.inOverlay,
+      close: () => this.props.onClose && this.props.onClose(),
+      wide, narrow: !wide,
+      lines: ['Deck truck', 'Picker truck', 'Crew truck', 'Winch tractor', 'Barbecue trailer', 'Tool cabinet', 'Other'],
+      rows: s.rows.map((r, i) => ({
+        ...r, warn: calc[i].warn,
+        jobLabel: 'Job ' + (i + 1), cardLabel: 'JOB ' + (i + 1), jobPh: i === 0 ? 'Job number' : '',
+        bg: s.focus === i ? '#F9F9F9' : '#FFFFFF', rule: '#C8C8C8',
+        focus: () => { if (s.focus !== i) this.setState({ focus: i }); },
+        set: { job: mk(i, 'job'), line: mk(i, 'line'), yes: mk(i, 'yes'), drawn: mk(i, 'drawn'), cut: mk(i, 'cut'), weld: mk(i, 'weld'), out: mk(i, 'out') },
+        c: { drawing: cell(calc[i].drawing, 'drawing', i), cutting: cell(calc[i].cutting, 'cutting', i), staging: cell(calc[i].staging, 'staging', i), floor: cell(calc[i].floor, 'floor', i), total: cell(calc[i].total, 'total', i) }
+      })),
+      finding, hasBar: bar.length > 0, bar,
+      exampleLabel: hasExample ? 'Clear the example and enter my jobs' : 'Show an example',
+      showExample: () => {
+        if (hasExample) { this.setRows(this.blank()); return; }
+        const rows = this.blank();
+        ex.forEach((e, i) => { rows[i] = { job: e[0], line: e[1], yes: e[2], drawn: e[3], cut: e[4], weld: e[5], out: e[6], example: true }; });
+        this.setRows(rows);
+      },
+      askReset: () => this.setState({ confirmReset: true }),
+      cancelReset: () => this.setState({ confirmReset: false }),
+      confirmReset: s.confirmReset,
+      doReset: () => { this.setState({ confirmReset: false, note: '', send: 'idle' }); this.setRows(this.blank()); try { localStorage.removeItem(this.KEY); } catch (e) {} },
+      doPrint: () => { document.body.dataset.printing = 'sheet'; window.print(); },
+      note: s.note,
+      setNote: e => { const v = e.target.value; this.setState({ note: v }); this.save(s.rows, v); },
+      sendDisabled,
+      sendBg: sendDisabled ? '#FFFFFF' : '#040406', sendFg: sendDisabled ? '#57514C' : '#FFFFFF', sendBorder: sendDisabled ? '#C8C8C8' : '#040406',
+      sendLabel: s.send === 'saving' ? 'Saving' : (s.send === 'sent' ? 'Sent' : 'Send to Joey'),
+      sendNote: !signed ? 'Opens after the NDA is signed. Only Joey and David see it.'
+        : s.send === 'sent' ? 'Sent to Joey. He answers you by email within one business day.'
+        : s.send === 'failed' ? 'It did not send from this page. Print it, or email joey.palomo@ecommercetexas.com.'
+        : 'Only Joey and David see it.',
+      sendNoteColor: s.send === 'failed' || s.send === 'sent' ? '#040406' : '#57514C',
+      send: () => {
+        if (sendDisabled) return;
+        this.setState({ send: 'saving' });
+        const url = this.props.submitEndpoint ?? '/api/submit';
+        const real = s.rows.filter(r => !r.example);
+        const rows = real.filter(r => r.job || r.yes || r.drawn || r.cut || r.weld || r.out).map(({ example, ...r }) => r);
+        const realFinding = this.analyze(real).finding;
+        fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'job-sheet', page: 'GordeyVilleCustoms_For_Randy_Where_The_Work_Waits', sentAt: new Date().toISOString(), data: { rows, note: s.note, finding: realFinding } }) })
+          .then(r => r.ok).catch(() => false).then(ok => this.setState({ send: ok ? 'sent' : 'failed' }));
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
