@@ -60,7 +60,7 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
           <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:#57514C;">EXHIBIT 1</span>
           <h1 style="margin:0;font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(38px,5.4vw,64px);line-height:1.04;letter-spacing:-0.02em;color:#040406;">Where the work waits.</h1>
         </div>
-        <p style="font-size:17px;line-height:1.65;text-wrap:pretty;">Randy, on October 9 you told us three things. You’re turning work down every day. Cutting and material are a bottleneck. And Jesse is one guy drawing every build. This sheet puts your own dates on it. Fill in ten recent jobs and it shows which step took longest between your dates. It runs on this page and sends nothing until you press Send. It is not a diagnosis. Your dates and the interviews decide that together.</p>
+        <p style="font-size:17px;line-height:1.65;text-wrap:pretty;">Randy, on October 9 you told us three things. You’re turning work down every day. Cutting and material are a bottleneck. And Jesse is one guy drawing every build. This sheet puts your own dates on it. Fill in ten recent jobs and it shows which step took longest between your dates, and which part was ready last most often. It runs on this page and sends nothing until you press Send. It is not a diagnosis. Your dates and the interviews decide that together.</p>
         <ul style="list-style:none;margin:0;padding:0;border-top:1px solid #C8C8C8;">
           <li style="padding:11px 0;border-bottom:1px solid #C8C8C8;font-size:15px;color:#040406;">Use a job number or a nickname. No customer names needed.</li>
           <li style="padding:11px 0;border-bottom:1px solid #C8C8C8;font-size:15px;color:#040406;">Leave a date blank if you don’t know it. The sheet uses what you give it.</li>
@@ -86,6 +86,9 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
             <p style="font-size:13px;line-height:1.55;color:#57514C;text-wrap:pretty;">Days on the middle job for each step. Each step counts only the jobs with both of its dates, so the steps don't add up to one job.</p>
           </div>
         </sc-if>
+        <sc-if value="{{ hasReady }}" hint-placeholder-val="{{ false }}">
+          <p style="font-size:13px;line-height:1.55;color:#57514C;text-wrap:pretty;">{{ readyLine }}</p>
+        </sc-if>
         <p style="font-size:14px;color:#57514C;">Your goal on October 9: kits ready two weeks to a month ahead.</p>
       </section>
 
@@ -105,10 +108,10 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
       <!-- Job board, wide -->
       <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
         <div style="overflow-x:auto;margin:0 -4px;padding:0 4px;">
-          <table style="width:100%;min-width:1180px;border-collapse:collapse;font-size:14px;">
+          <table style="width:100%;min-width:1320px;border-collapse:collapse;font-size:14px;">
             <thead>
               <tr>
-                <th colspan="7" style="text-align:left;padding:0 0 8px;font-size:11px;font-weight:600;letter-spacing:0.08em;color:#256370;">YOUR DATES</th>
+                <th colspan="8" style="text-align:left;padding:0 0 8px;font-size:11px;font-weight:600;letter-spacing:0.08em;color:#256370;">YOUR DATES</th>
                 <th colspan="5" style="text-align:right;padding:0 0 8px;font-size:11px;font-weight:600;letter-spacing:0.08em;color:#256370;border-left:1px solid #C8C8C8;">DAYS</th>
               </tr>
               <tr style="border-top:1px solid #040406;border-bottom:1px solid #040406;">
@@ -119,6 +122,7 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
                 <th style="text-align:left;padding:10px 6px;font-weight:600;color:#040406;">Cut parts back</th>
                 <th style="text-align:left;padding:10px 6px;font-weight:600;color:#040406;">Welding started</th>
                 <th style="text-align:left;padding:10px 6px;font-weight:600;color:#040406;">Out the door</th>
+                <th style="text-align:left;padding:10px 6px;font-weight:600;color:#040406;width:140px;">Ready last</th>
                 <th style="text-align:right;padding:10px 6px;font-weight:600;color:#040406;border-left:1px solid #C8C8C8;width:66px;">Drawing</th>
                 <th style="text-align:right;padding:10px 6px;font-weight:600;color:#040406;width:66px;">Cutting</th>
                 <th style="text-align:right;padding:10px 6px;font-weight:600;color:#040406;width:66px;">Staging</th>
@@ -145,6 +149,7 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
                   <td style="padding:6px;vertical-align:top;"><input type="date" value="{{ r.cut }}" onChange="{{ r.set.cut }}" disabled="{{ r.example }}" aria-label="Cut parts back" style="width:100%;height:40px;border:1px solid #C8C8C8;border-radius:0;padding:0 8px;background:#FFFFFF;font-size:14px;"></td>
                   <td style="padding:6px;vertical-align:top;"><input type="date" value="{{ r.weld }}" onChange="{{ r.set.weld }}" disabled="{{ r.example }}" aria-label="Welding started" style="width:100%;height:40px;border:1px solid #C8C8C8;border-radius:0;padding:0 8px;background:#FFFFFF;font-size:14px;"></td>
                   <td style="padding:6px;vertical-align:top;"><input type="date" value="{{ r.out }}" onChange="{{ r.set.out }}" disabled="{{ r.example }}" aria-label="Out the door" style="width:100%;height:40px;border:1px solid #C8C8C8;border-radius:0;padding:0 8px;background:#FFFFFF;font-size:14px;"></td>
+                  <td style="padding:6px;vertical-align:top;"><select value="{{ r.lastReady }}" onChange="{{ r.set.lastReady }}" disabled="{{ r.example }}" aria-label="Ready last" style="width:100%;height:40px;border:1px solid #C8C8C8;border-radius:0;padding:0 8px;background:#FFFFFF;font-size:14px;"><option value="">Pick one</option><sc-for list="{{ readyParts }}" as="p" hint-placeholder-count="5"><option value="{{ p }}">{{ p }}</option></sc-for></select></td>
                   <td style="padding:16px 6px 6px;vertical-align:top;text-align:right;border-left:1px solid #C8C8C8;font-family:'Hanken Grotesk','DM Sans',sans-serif;font-size:15px;font-weight:600;color:{{ r.c.drawing.color }};">{{ r.c.drawing.text }}</td>
                   <td style="padding:16px 6px 6px;vertical-align:top;text-align:right;font-family:'Hanken Grotesk','DM Sans',sans-serif;font-size:15px;font-weight:600;color:{{ r.c.cutting.color }};">{{ r.c.cutting.text }}</td>
                   <td style="padding:16px 6px 6px;vertical-align:top;text-align:right;font-family:'Hanken Grotesk','DM Sans',sans-serif;font-size:15px;font-weight:600;color:{{ r.c.staging.color }};">{{ r.c.staging.text }}</td>
@@ -172,6 +177,7 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
               <label style="display:grid;grid-template-columns:132px minmax(0,1fr);align-items:center;gap:10px;font-size:14px;color:#040406;">Cut parts back<input type="date" value="{{ r.cut }}" onChange="{{ r.set.cut }}" disabled="{{ r.example }}" style="height:46px;border:1px solid #C8C8C8;border-radius:0;padding:0 10px;background:#FFFFFF;font-size:16px;min-width:0;"></label>
               <label style="display:grid;grid-template-columns:132px minmax(0,1fr);align-items:center;gap:10px;font-size:14px;color:#040406;">Welding started<input type="date" value="{{ r.weld }}" onChange="{{ r.set.weld }}" disabled="{{ r.example }}" style="height:46px;border:1px solid #C8C8C8;border-radius:0;padding:0 10px;background:#FFFFFF;font-size:16px;min-width:0;"></label>
               <label style="display:grid;grid-template-columns:132px minmax(0,1fr);align-items:center;gap:10px;font-size:14px;color:#040406;">Out the door<input type="date" value="{{ r.out }}" onChange="{{ r.set.out }}" disabled="{{ r.example }}" style="height:46px;border:1px solid #C8C8C8;border-radius:0;padding:0 10px;background:#FFFFFF;font-size:16px;min-width:0;"></label>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:#040406;">Ready last<select value="{{ r.lastReady }}" onChange="{{ r.set.lastReady }}" disabled="{{ r.example }}" style="height:46px;border:1px solid #C8C8C8;border-radius:0;padding:0 8px;background:#FFFFFF;font-size:16px;font-weight:400;min-width:0;"><option value="">Pick one</option><sc-for list="{{ readyParts }}" as="p" hint-placeholder-count="5"><option value="{{ p }}">{{ p }}</option></sc-for></select></label>
               <sc-if value="{{ r.warn }}" hint-placeholder-val="{{ false }}"><p role="alert" style="font-size:14px;font-weight:600;color:#040406;">Check these dates. A later step is before an earlier one.</p></sc-if>
               <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid #C8C8C8;">
                 <div style="padding:10px 6px 0 0;display:flex;flex-direction:column;gap:2px;"><span style="font-size:11px;color:#57514C;">Drawing</span><span style="font-family:'Hanken Grotesk','DM Sans',sans-serif;font-size:16px;font-weight:600;color:{{ r.c.drawing.color }};">{{ r.c.drawing.text }}</span></div>
@@ -190,7 +196,7 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
         <div style="border-top:1px solid #040406;padding-top:18px;display:flex;flex-direction:column;gap:12px;">
           <h2 style="margin:0;font-family:'Playfair Display',serif;font-weight:600;font-size:22px;line-height:1.25;color:#040406;">What it would take to know this for real.</h2>
           <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;font-size:15px;line-height:1.55;">
-            <li style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #C8C8C8;"><span aria-hidden="true" style="width:6px;height:6px;background:#256370;flex:none;margin-top:9px;"></span>The interviews hear each wait from both sides: the person waiting and the person being waited on.</li>
+            <li style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #C8C8C8;"><span aria-hidden="true" style="width:6px;height:6px;background:#256370;flex:none;margin-top:9px;"></span>The interviews hear each wait from the people who take part. Add your lead welder and we hear the floor’s side too.</li>
             <li style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #C8C8C8;"><span aria-hidden="true" style="width:6px;height:6px;background:#256370;flex:none;margin-top:9px;"></span>Anything about drawings goes to Dave before anyone acts on it.</li>
             <li style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #C8C8C8;"><span aria-hidden="true" style="width:6px;height:6px;background:#256370;flex:none;margin-top:9px;"></span>Where your dates and the interviews disagree, we check both with you before deciding.</li>
             <li style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #C8C8C8;"><span aria-hidden="true" style="width:6px;height:6px;background:#256370;flex:none;margin-top:9px;"></span>Whether anything gets built is decided by the plan, not by this sheet.</li>
@@ -230,12 +236,12 @@ a { color: #040406; text-decoration-color: #C8C8C8; }
 <script type="text/x-dc" data-dc-script data-props="{&quot;ndaSigned&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;preparedOn&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;October 16, 2026&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;submitEndpoint&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;/api/submit&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;inOverlay&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onClose&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
 class Component extends DCLogic {
   KEY = 'gvc-for-randy-sheet-v1';
-  blank = () => Array.from({ length: 10 }, () => ({ job: '', line: '', yes: '', drawn: '', cut: '', weld: '', out: '', example: false }));
+  blank = () => Array.from({ length: 10 }, () => ({ job: '', line: '', yes: '', drawn: '', cut: '', weld: '', out: '', lastReady: '', example: false }));
   state = { rows: this.load() || this.blank(), note: '', focus: -1, confirmReset: false, send: 'idle', w: 1200 };
   rootRef = React.createRef();
 
-  emptyRow = () => ({ job: '', line: '', yes: '', drawn: '', cut: '', weld: '', out: '', example: false });
-  load() { try { const v = JSON.parse(localStorage.getItem(this.KEY)); if (v && Array.isArray(v.rows) && v.rows.length === 10) { this._note = v.note || ''; return v.rows.map(r => r && !r.example ? r : this.emptyRow()); } } catch (e) {} return null; }
+  emptyRow = () => ({ job: '', line: '', yes: '', drawn: '', cut: '', weld: '', out: '', lastReady: '', example: false });
+  load() { try { const v = JSON.parse(localStorage.getItem(this.KEY)); if (v && Array.isArray(v.rows) && v.rows.length === 10) { this._note = v.note || ''; return v.rows.map(r => r && !r.example ? { lastReady: '', ...r } : this.emptyRow()); } } catch (e) {} return null; }
   save(rows, note) { try { localStorage.setItem(this.KEY, JSON.stringify({ rows: rows.map(r => r.example ? this.emptyRow() : r), note })); } catch (e) {} }
   componentDidMount() {
     if (this._note) this.setState({ note: this._note });
@@ -249,6 +255,14 @@ class Component extends DCLogic {
   setRows(rows) { this.setState({ rows }); this.save(rows, this.state.note); }
   days(a, b) { if (!a || !b) return null; const d = (Date.parse(b) - Date.parse(a)) / 86400000; return isNaN(d) ? null : Math.round(d); }
   median(v) { if (!v.length) return null; const s = [...v].sort((a, b) => a - b), m = s.length >> 1; const x = s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; return Math.floor(x + 0.5); }
+  realRows(rows) { return rows.filter(r => !r.example && (r.job || r.yes || r.drawn || r.cut || r.weld || r.out)); }
+  readyLine(rows) {
+    const parts = ['Drawing', 'Cut steel', 'Material', 'Something else'];
+    const picked = this.realRows(rows).filter(r => parts.includes(r.lastReady));
+    if (!picked.length) return '';
+    const counts = parts.map(p => [p, picked.filter(r => r.lastReady === p).length]).filter(([, n]) => n > 0);
+    return `Ready last, in the ${picked.length} jobs where you picked one: ${counts.map(([p, n]) => p + ' ' + n).join(', ')}.`;
+  }
   outOfOrder(r) { const seq = [r.yes, r.drawn, r.cut, r.weld, r.out].filter(Boolean).map(Date.parse); for (let i = 1; i < seq.length; i++) if (seq[i] < seq[i - 1]) return true; return false; }
 
   analyze(rows) {
@@ -314,21 +328,23 @@ class Component extends DCLogic {
       inOverlay: !!this.props.inOverlay,
       close: () => this.props.onClose && this.props.onClose(),
       wide, narrow: !wide,
+      readyParts: ['Drawing', 'Cut steel', 'Material', 'Something else', 'Not sure'],
       lines: ['Deck truck', 'Picker truck', 'Crew truck', 'Winch tractor', 'Barbecue trailer', 'Tool cabinet', 'Other'],
       rows: s.rows.map((r, i) => ({
         ...r, warn: calc[i].warn,
         jobLabel: 'Job ' + (i + 1), cardLabel: 'JOB ' + (i + 1), jobPh: i === 0 ? 'Job number' : '',
         bg: s.focus === i ? '#F9F9F9' : '#FFFFFF', rule: '#C8C8C8',
         focus: () => { if (s.focus !== i) this.setState({ focus: i }); },
-        set: { job: mk(i, 'job'), line: mk(i, 'line'), yes: mk(i, 'yes'), drawn: mk(i, 'drawn'), cut: mk(i, 'cut'), weld: mk(i, 'weld'), out: mk(i, 'out') },
+        set: { job: mk(i, 'job'), line: mk(i, 'line'), yes: mk(i, 'yes'), drawn: mk(i, 'drawn'), cut: mk(i, 'cut'), weld: mk(i, 'weld'), out: mk(i, 'out'), lastReady: mk(i, 'lastReady') },
         c: { drawing: cell(calc[i].drawing, 'drawing', i), cutting: cell(calc[i].cutting, 'cutting', i), staging: cell(calc[i].staging, 'staging', i), floor: cell(calc[i].floor, 'floor', i), total: cell(calc[i].total, 'total', i) }
       })),
       finding, hasBar: bar.length > 0, bar,
+      readyLine: this.readyLine(s.rows), hasReady: !!this.readyLine(s.rows),
       exampleLabel: hasExample ? 'Clear the example and enter my jobs' : 'Show an example',
       showExample: () => {
         if (hasExample) { this.setRows(this.blank()); return; }
         const rows = this.blank();
-        ex.forEach((e, i) => { rows[i] = { job: e[0], line: e[1], yes: e[2], drawn: e[3], cut: e[4], weld: e[5], out: e[6], example: true }; });
+        ex.forEach((e, i) => { rows[i] = { job: e[0], line: e[1], yes: e[2], drawn: e[3], cut: e[4], weld: e[5], out: e[6], lastReady: '', example: true }; });
         this.setRows(rows);
       },
       askReset: () => this.setState({ confirmReset: true }),
@@ -351,9 +367,9 @@ class Component extends DCLogic {
         this.setState({ send: 'saving' });
         const url = this.props.submitEndpoint ?? '/api/submit';
         const real = s.rows.filter(r => !r.example);
-        const rows = real.filter(r => r.job || r.yes || r.drawn || r.cut || r.weld || r.out).map(({ example, ...r }) => r);
+        const rows = this.realRows(real).map(({ example, ...r }) => ({ ...r, lastReady: r.lastReady || '' }));
         const realFinding = this.analyze(real).finding;
-        fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'job-sheet', page: 'GordeyVilleCustoms_For_Randy_Where_The_Work_Waits', sentAt: new Date().toISOString(), data: { rows, note: s.note, finding: realFinding } }) })
+        fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'job-sheet', page: 'GordeyVilleCustoms_For_Randy_Where_The_Work_Waits', sentAt: new Date().toISOString(), version: 'gv-v7.2', data: { rows, note: s.note, finding: realFinding } }) })
           .then(r => r.ok).catch(() => false).then(ok => this.setState({ send: ok ? 'sent' : 'failed' }));
       }
     };

@@ -7,7 +7,7 @@
 // Three types arrive:
 //   accept     Section 09: the signed NDA, the layers chosen, the interview list, notes
 //   note       "I have a question" panel, from anywhere on the page
-//   job-sheet  "Where the work waits" overlay: ten jobs, five dates each
+//   job-sheet  "Where the work waits" overlay: ten jobs, five dates and a "Ready last" pick each
 //
 // Each email leads with what Joey does next, then the record. Nothing the page sends is
 // dropped: unplaced fields render under "Everything else submitted", and the raw record is
@@ -201,8 +201,9 @@ function buildAccept(d, env, meta, ctx) {
 
   body += section('The price', rows([
     ['Step one', `${cad(total)} plus GST, billed half on the first invoice and half at the review meeting.`],
+    ['Guarantee', `if the plan does not show one change worth more than ${cad(STEP_ONE_PRICE)} in its first year (added profit or costs that stop, after the change's own cost), the second half is not owed.`],
     ['Included', 'The interviews and job dates, the written plan, the hire-or-machine answer (drafting capacity and machine payback), the funding application with David at no charge, and the follow-up proposal.'],
-    ['Credit', 'Every dollar comes off any build within 90 days of the review meeting.'],
+    ['Credit', 'everything paid for step one comes off any builds started with us within 90 days of the review meeting. Credit left after one build carries to the next one in that window.'],
     ['Funding alone', `The page priced the funding application alone at ${cad(FUNDING_ALONE_PRICE)} plus GST.`]
   ]));
 
@@ -272,9 +273,16 @@ function analyzeSheet(rowsIn) {
   const close = allIn && ranked.length > 1 && med[ranked[0][0]] - med[ranked[1][0]] <= 2;
   return { calc, med, cnt, top: allIn ? ranked[0] : null, close: close ? ranked[1] : null, missing: STEPS.filter(([k]) => cnt[k] < 3) };
 }
+const READY_PARTS = ['Drawing', 'Cut steel', 'Material', 'Something else'];
+// Counts each row's "Ready last" pick. Rows from a v7.0 sheet carry no lastReady and count as not picked.
+function readyLast(jobs) {
+  const by = READY_PARTS.map(p => [p, jobs.filter(r => r.lastReady === p).length]);
+  return { n: by.reduce((s, [, c]) => s + c, 0), by: by.filter(([, c]) => c > 0), notSure: jobs.filter(r => r.lastReady === 'Not sure').length };
+}
 function buildSheet(d, env, meta, ctx) {
   const jobs = (Array.isArray(d.rows) ? d.rows : []).filter(r => r && typeof r === 'object');
   const a = analyzeSheet(jobs);
+  const rl = readyLast(jobs);
   const warned = a.calc.filter(c => c.warn).length;
   let headline, lede;
   if (a.top && a.close) {
@@ -294,6 +302,7 @@ function buildSheet(d, env, meta, ctx) {
   const jobRows = jobs.map((r, i) => {
     const c = a.calc[i], n = v => (v === null ? '' : String(v));
     return [(r.job || 'Job ' + (i + 1)) + (c.warn ? ' (dates out of order)' : ''), r.line || '', fmtD(r.yes), fmtD(r.drawn), fmtD(r.cut), fmtD(r.weld), fmtD(r.out),
+      str(r.lastReady, 40) ? str(r.lastReady, 40) : { t: 'Not picked', color: B.muted },
       { t: n(c.drawing), color: a.top && a.top[0] === 'drawing' ? B.evidence : B.ink }, { t: n(c.cutting), color: a.top && a.top[0] === 'cutting' ? B.evidence : B.ink },
       { t: n(c.staging), color: a.top && a.top[0] === 'staging' ? B.evidence : B.ink }, { t: n(c.floor), color: a.top && a.top[0] === 'floor' ? B.evidence : B.ink }, n(c.total)];
   });
@@ -301,13 +310,15 @@ function buildSheet(d, env, meta, ctx) {
   let body = section('What the page showed them', quote(d.finding || 'No finding text sent.') + para('The headline above is recomputed here from the same dates, with the same rules.', 'color:' + B.muted + ';font-size:13px;'));
   if (trimAll(d.note)) body += section('Their note', quote(d.note, B.accent));
   body += section('Middle job, by step', grid(['Step', 'Median', 'Jobs counted'], stepRows, { boldFirst: true, right: [1, 2] }));
-  body += section('The jobs, dates and days', grid(['Job', 'Line', 'Yes', 'Drawn', 'Cut', 'Weld', 'Out', 'Draw', 'Cut', 'Stage', 'Floor', 'Total'], jobRows, { boldFirst: true, nowrap: [2, 3, 4, 5, 6], right: [7, 8, 9, 10, 11] }) +
+  body += section('The jobs, dates and days', grid(['Job', 'Line', 'Yes', 'Drawn', 'Cut', 'Weld', 'Out', 'Ready last', 'Draw', 'Cut', 'Stage', 'Floor', 'Total'], jobRows, { boldFirst: true, nowrap: [2, 3, 4, 5, 6], right: [8, 9, 10, 11, 12] }) +
+    (rl.n ? para(esc(`Ready last, in ${rl.n} jobs: ${rl.by.map(([p, c]) => p + ' ' + c).join(', ')}.`)) : '') +
+    (rl.notSure ? para(esc(`Not sure: ${rl.notSure}`)) : '') +
     para('Days between dates. The same rows are attached as a CSV.', 'color:' + B.muted + ';font-size:13px;'));
   const rest = leftovers(d, new Set(['rows', 'note', 'finding']));
   if (rest.length) body += section('Everything else submitted', rows(rest));
   body += audit(meta, { sentAt: env.sentAt, key: ctx.key });
 
-  const cols = ['job', 'line', 'yes', 'drawn', 'cut', 'weld', 'out'];
+  const cols = ['job', 'line', 'yes', 'drawn', 'cut', 'weld', 'out', 'lastReady'];
   const csvCell = v => { const s = v == null ? '' : String(v); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
   const csv = [cols.concat(['drawing_days', 'cutting_days', 'staging_days', 'floor_days', 'total_days', 'out_of_order']).join(',')]
     .concat(jobs.map((r, i) => cols.map(k => csvCell(r[k])).concat(['drawing', 'cutting', 'staging', 'floor', 'total'].map(k => a.calc[i][k] === null ? '' : a.calc[i][k]), [a.calc[i].warn ? 'yes' : '']).join(','))).join('\n');
@@ -316,7 +327,7 @@ function buildSheet(d, env, meta, ctx) {
     subject: `${B.short} sent the job sheet: ${plural(jobs.length, 'job')}. ${headline}`,
     eyebrow: 'Job sheet · where the work waits',
     headline, lede, body,
-    summary: { medians: a.med, counted: a.cnt, longest: a.top ? a.top[0] : null },
+    summary: { medians: a.med, counted: a.cnt, longest: a.top ? a.top[0] : null, readyLast: Object.fromEntries(rl.by.concat(rl.notSure ? [['Not sure', rl.notSure]] : [])) },
     extra: [{ filename: `gordyville-job-sheet-${meta.receivedAtIso.slice(0, 10)}.csv`, content: Buffer.from(csv).toString('base64') }]
   };
 }

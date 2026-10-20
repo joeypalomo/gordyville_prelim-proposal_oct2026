@@ -9,12 +9,13 @@ Live at https://gordyville-customs-preliminary-prop.vercel.app/ (Vercel project
 |---|---|
 | `index.html` | The page as served. A single-file bundle: never edit it by hand. |
 | `src/template.html` | The page's markup and logic, decoded from the bundle. Edit this. |
+| `src/job-sheet.html` | The job sheet page ("Where the work waits"), a compressed asset inside the bundle. Edit this. |
 | `tools/bundle.py` | `unpack` and `pack` between the two. Round trip is byte for byte. |
 | `api/submit.js` | The function every submission posts to. Emails Joey through Resend. |
 | `assets/…NDA…v1_101726.pdf` | The NDA the page shows. Attached to every signing email and served at the page's fallback link. |
 
-To change the page: edit `src/template.html`, then
-`python3 -I tools/bundle.py pack index.html src/template.html`, commit both.
+To change the page: edit `src/template.html` or `src/job-sheet.html`, then
+`python3 -I tools/bundle.py pack index.html src/template.html src/job-sheet.html`, commit all three.
 
 ## What the page sends, and what Joey gets
 
@@ -25,7 +26,7 @@ Any failure returns non-2xx, so the page shows its "email Joey" fallback instead
 |---|---|---|---|
 | `accept` | Section 09, Sign and start | `GordeyVille signed the NDA: <name> chose <option>` | record JSON, the NDA PDF |
 | `note` | "I have a question" panel | `GordeyVille question, <where>:` | record JSON |
-| `job-sheet` | "Where the work waits" overlay | `GordeyVille sent the job sheet:` | record JSON, rows as CSV |
+| `job-sheet` | "Where the work waits" overlay | `GordeyVille sent the job sheet:` | record JSON, rows as CSV (with each job's "Ready last" pick) |
 
 The signing email leads with the next moves (countersign date, first invoice amount, interview
 links and any missing emails), then notes, signature, consents, choice, interviews, dates, an
@@ -44,7 +45,7 @@ Retries never double-send: the Resend idempotency key is a hash of the submissio
 
 ## The price lives in two places
 
-Step one is one price (gv-v7.0): C$18,500 plus GST. It is `BASE.price` in `src/template.html` and
+Step one is one price (since gv-v7.0): C$18,500 plus GST. It is `BASE.price` in `src/template.html` and
 `STEP_ONE_PRICE` in `api/submit.js`; the funding application alone is `FUNDING_ALONE` and
 `FUNDING_ALONE_PRICE` (C$5,250). The handler refuses any signature whose price differs (400, plus
 an alert email to Joey). Change both files together, and every literal `C$18,500` in the copy.
